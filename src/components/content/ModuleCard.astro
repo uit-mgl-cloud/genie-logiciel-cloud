@@ -1,0 +1,29 @@
+---
+interface Props {
+  numero: number;
+  titre: string;
+  description: string;
+  tags: string[];
+  statut: 'ouvert' | 'a-venir' | 'termine' | 'en-cours';
+  seances: number;
+  featured?: boolean;
+}
+const { numero, titre, description, tags, statut, seances, featured } = Astro.props;
+---
+<a href={`/cours/module-${numero.toString().padStart(2, '0')}`} class={`block border-r border-b border-[var(--border)] p-7 pb-6 cursor-pointer transition-colors duration-150 relative no-underline group hover:bg-[var(--bg-2)] ${featured ? 'bg-[var(--bg-2)] border-[var(--border-2)]' : ''}`}>
+  <div class={`text-[10px] tracking-[0.1em] mb-3.5 ${featured ? 'text-[var(--accent)]' : 'text-[var(--hint)]'}`}>
+    {numero.toString().padStart(2, '0')}
+  </div>
+  <div class="font-serif text-[17px] font-light leading-tight text-[var(--text)] mb-2 tracking-tight" set:html={titre} />
+  <div class="text-[11px] text-[var(--muted)] leading-relaxed mb-4.5">
+    {description}
+  </div>
+  <div class="flex flex-wrap gap-1.5">
+    {statut === 'en-cours' && <span class="text-[9px] tracking-[0.08em] px-2 py-0.5 rounded-sm border border-[rgba(200,240,128,0.3)] text-[var(--accent)] bg-[rgba(200,240,128,0.06)]">En cours</span>}
+    <span class="text-[9px] tracking-[0.08em] px-2 py-0.5 rounded-sm border border-[var(--border-2)] text-[var(--hint)] bg-transparent">{seances} séances</span>
+    {tags.map(tag => (
+      <span class="text-[9px] tracking-[0.08em] px-2 py-0.5 rounded-sm border border-[var(--border-2)] text-[var(--hint)] bg-transparent">{tag}</span>
+    ))}
+  </div>
+  <span class="absolute top-6 right-6 text-[var(--hint)] text-[14px] opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+</a>

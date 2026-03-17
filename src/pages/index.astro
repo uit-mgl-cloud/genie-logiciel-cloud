@@ -1,17 +1,106 @@
 ---
+import Base from '../layouts/Base.astro';
+import ModuleCard from '../components/content/ModuleCard.astro';
+import TpRow from '../components/tp/TpRow.astro';
+import ContribCard from '../components/contributions/ContribCard.astro';
+import { getCollection } from 'astro:content';
 
+const cours = await getCollection('cours');
+const modulesMap = cours.reduce((acc, curr) => {
+  const mod = curr.data.module;
+  if (!acc[mod]) acc[mod] = [];
+  acc[mod].push(curr);
+  return acc;
+}, {} as Record<number, any[]>);
+const sortedModules = Object.keys(modulesMap).map(Number).sort((a, b) => a - b).slice(0, 6);
+
+const tps = await getCollection('tp');
+tps.sort((a, b) => a.data.numero - b.data.numero);
+const featuredTps = tps.slice(0, 4);
+
+const contributions = await getCollection('contributions');
+contributions.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const featuredContribs = contributions.slice(0, 4);
 ---
+<Base title="Génie Logiciel pour le Cloud" description="Plateforme collaborative du cours M2. Cours, TP, projets et contributions étudiantes — tout est open source, tout est versionné.">
+  <div class="px-12 pt-20 pb-16 border-b border-[var(--border)] relative overflow-hidden">
+    <div class="absolute inset-0 bg-[linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] bg-[length:40px_40px] opacity-35 pointer-events-none"></div>
+    <div class="relative max-w-[680px]">
+      <div class="text-[10px] tracking-[0.12em] text-[var(--accent)] mb-5 flex items-center gap-2 before:content-[''] before:inline-block before:w-5 before:h-[1px] before:bg-[var(--accent)]">
+        MASTER INFORMATIQUE · S2
+      </div>
+      <h1 class="font-serif text-[52px] font-light leading-[1.08] tracking-[-0.03em] text-[var(--text)] mb-2">Génie Logiciel<br>pour le <em class="italic text-[var(--accent-2)]">Cloud</em></h1>
+      <p class="text-[12px] text-[var(--muted)] max-w-[420px] leading-[1.8] mt-5">Plateforme collaborative du cours M2. Cours, TP, projets et contributions étudiantes — tout est open source, tout est versionné.</p>
+      
+      <div class="flex gap-8 mt-9">
+        <div class="flex flex-col gap-0.5"><span class="font-serif text-[22px] font-medium text-[var(--text)]">{Object.keys(modulesMap).length}</span><span class="text-[10px] text-[var(--hint)] tracking-[0.08em]">MODULES</span></div>
+        <div class="flex flex-col gap-0.5"><span class="font-serif text-[22px] font-medium text-[var(--text)]">{tps.length}</span><span class="text-[10px] text-[var(--hint)] tracking-[0.08em]">TP</span></div>
+        <div class="flex flex-col gap-0.5"><span class="font-serif text-[22px] font-medium text-[var(--text)]">{contributions.length}</span><span class="text-[10px] text-[var(--hint)] tracking-[0.08em]">CONTRIBUTIONS</span></div>
+        <div class="flex flex-col gap-0.5"><span class="font-serif text-[22px] font-medium text-[var(--text)]">0€</span><span class="text-[10px] text-[var(--hint)] tracking-[0.08em]">COÛT HOSTING</span></div>
+      </div>
+    </div>
+  </div>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+  <div class="flex items-baseline justify-between px-12 py-8 pb-5 border-b border-[var(--border)]">
+    <span class="text-[10px] tracking-[0.12em] text-[var(--muted)] flex items-center gap-2 before:content-[''] before:inline-block before:w-3.5 before:h-[1px] before:bg-[var(--muted)]">MODULES DU COURS</span>
+    <span class="text-[11px] text-[var(--hint)]">{Object.keys(modulesMap).length} modules · {cours.length} séances</span>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-l border-[var(--border)]">
+    {sortedModules.map((mod, i) => (
+      <ModuleCard 
+        numero={mod}
+        titre={`Module ${mod}`}
+        description="Informations à propos du module..."
+        tags={[]}
+        statut={i === 0 ? 'en-cours' : 'a-venir'}
+        seances={modulesMap[mod].length}
+        featured={i === 0}
+      />
+    ))}
+    {sortedModules.length === 0 && (
+      <div class="p-8 text-[12px] text-[var(--muted)] col-span-3 border-r border-b border-[var(--border)]">Aucun module pour le moment.</div>
+    )}
+  </div>
+
+  <div class="flex items-baseline justify-between px-12 py-8 pb-5 border-b border-[var(--border)]">
+    <span class="text-[10px] tracking-[0.12em] text-[var(--muted)] flex items-center gap-2 before:content-[''] before:inline-block before:w-3.5 before:h-[1px] before:bg-[var(--muted)]">TRAVAUX PRATIQUES</span>
+    <span class="text-[11px] text-[var(--hint)]">{tps.length} TP · soumission via PR</span>
+  </div>
+
+  <div class="border-b border-[var(--border)] border-t-0">
+    {featuredTps.map((tp, i) => (
+      <TpRow 
+        slug={tp.id} 
+        numero={tp.data.numero} 
+        titre={tp.data.titre} 
+        module={tp.data.module} 
+        statut={tp.data.statut} 
+      />
+    ))}
+    {featuredTps.length === 0 && (
+      <div class="px-12 py-8 text-[12px] text-[var(--muted)]">Aucun TP pour le moment.</div>
+    )}
+  </div>
+
+  <div class="flex items-baseline justify-between px-12 py-8 pb-5 border-b border-[var(--border)]">
+    <span class="text-[10px] tracking-[0.12em] text-[var(--muted)] flex items-center gap-2 before:content-[''] before:inline-block before:w-3.5 before:h-[1px] before:bg-[var(--muted)]">CONTRIBUTIONS ÉTUDIANTES</span>
+    <span class="text-[11px] text-[var(--hint)]">{contributions.length} contributions</span>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 border-l border-[var(--border)]">
+    {featuredContribs.map((c) => (
+      <ContribCard 
+        slug={c.id}
+        type={c.data.type}
+        titre={c.data.titre}
+        auteur={c.data.auteur}
+        module={c.data.module}
+        date={c.data.date}
+      />
+    ))}
+    {featuredContribs.length === 0 && (
+      <div class="p-8 text-[12px] text-[var(--muted)] col-span-2 border-b border-[var(--border)] border-r">Aucune contribution pour le moment.</div>
+    )}
+  </div>
+</Base>

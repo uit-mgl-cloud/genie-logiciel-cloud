@@ -1,0 +1,98 @@
+---
+import Base from './Base.astro';
+import Breadcrumb from '../components/nav/Breadcrumb.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  numero: number;
+  module: number;
+  difficulte: string;
+  duree: string;
+  statut: 'ouvert' | 'a-venir' | 'termine';
+  outils: string[];
+  prerequis?: string[];
+  date_ouverture?: Date;
+}
+
+const { title, description, numero, module, difficulte, duree, statut, outils, prerequis, date_ouverture } = Astro.props;
+
+const dateStr = date_ouverture ? new Intl.DateTimeFormat('fr-FR', {
+  year: 'numeric', month: 'long', day: 'numeric',
+}).format(date_ouverture) : undefined;
+---
+
+<Base title={title} description={description}>
+  <div class="flex items-center gap-2 text-[11px] text-[var(--hint)] px-10 py-4 border-b border-[var(--border)]">
+    <Breadcrumb context="tp" module={module} title={`TP ${numero}`} />
+  </div>
+
+  <div class="grid grid-cols-[1fr_280px] min-h-[600px] max-w-5xl mx-auto">
+    <main class="px-13 py-10 w-full border-r border-[var(--border)]">
+      <div class="text-[10px] tracking-[0.1em] text-[var(--accent)] mb-4 flex items-center gap-2 before:content-[''] before:inline-block before:w-4 before:h-[1px] before:bg-[var(--accent)]">
+        TP {numero.toString().padStart(2, '0')}
+      </div>
+      <h1 class="font-serif text-[36px] font-light leading-none tracking-tight mb-4" set:html={title} />
+      <p class="text-[13px] text-[var(--muted)] leading-relaxed mb-9 pb-7 border-b border-[var(--border)]">
+        {description}
+      </p>
+
+      <div class="prose">
+        <slot />
+      </div>
+    </main>
+
+    <aside class="py-10 px-8 sticky top-0 self-start">
+      <div class="mb-8">
+        <div class="text-[9px] text-[var(--hint)] tracking-widest mb-2">STATUT</div>
+        {statut === 'ouvert' && <span class="bg-[rgba(200,240,128,0.1)] text-[var(--accent)] border border-[rgba(200,240,128,0.25)] text-[9px] px-2 py-0.5 rounded-sm tracking-widest inline-block">OUVERT</span>}
+        {statut === 'a-venir' && <span class="bg-[rgba(122,127,142,0.08)] text-[var(--hint)] border border-[var(--border)] text-[9px] px-2 py-0.5 rounded-sm tracking-widest inline-block">À VENIR</span>}
+        {statut === 'termine' && <span class="bg-[var(--bg-2)] text-[var(--hint)] border border-[var(--border-2)] text-[9px] px-2 py-0.5 rounded-sm tracking-widest inline-block">TERMINÉ</span>}
+      </div>
+
+      <div class="mb-8">
+        <div class="text-[9px] text-[var(--hint)] tracking-widest mb-3">MÉTADONNÉES</div>
+        <div class="flex flex-col gap-3">
+          <div class="flex justify-between items-center text-[11px]">
+            <span class="text-[var(--hint)]">Module</span>
+            <span class="text-[var(--text)]">{module.toString().padStart(2, '0')}</span>
+          </div>
+          <div class="flex justify-between items-center text-[11px]">
+            <span class="text-[var(--hint)]">Difficulté</span>
+            <span class="text-[var(--text)] capitalize">{difficulte}</span>
+          </div>
+          <div class="flex justify-between items-center text-[11px]">
+            <span class="text-[var(--hint)]">Durée estimée</span>
+            <span class="text-[var(--text)]">{duree}</span>
+          </div>
+          {dateStr && (
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="text-[var(--hint)]">Date d'ouverture</span>
+              <span class="text-[var(--text)]">{dateStr}</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {outils.length > 0 && (
+        <div class="mb-8">
+          <div class="text-[9px] text-[var(--hint)] tracking-widest mb-3">OUTILS</div>
+          <div class="flex flex-wrap gap-1.5">
+            {outils.map(o => (
+              <span class="text-[9px] text-[var(--hint)] border border-[var(--border-2)] px-1.5 py-0.5 rounded-sm bg-transparent">{o}</span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {prerequis && prerequis.length > 0 && (
+        <div class="mb-8">
+          <div class="text-[9px] text-[var(--hint)] tracking-widest mb-3">PRÉREQUIS</div>
+          <ul class="text-[11px] text-[var(--muted)] flex flex-col gap-1.5 list-disc pl-3">
+            {prerequis.map(p => <li>{p}</li>)}
+          </ul>
+        </div>
+      )}
+    </aside>
+  </div>
+</Base>

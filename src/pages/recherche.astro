@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Recherche" description="Chercher dans les cours, TP et contributions.">
+  <main class="max-w-[720px] mx-auto px-12 py-16 text-[var(--text)]">
+    <div class="text-[10px] tracking-[0.1em] text-[var(--accent)] mb-4 flex items-center gap-2 before:content-[''] before:inline-block before:w-4 before:h-[1px] before:bg-[var(--accent)]">
+      IN DEX GLOBAL
+    </div>
+    
+    <h1 class="font-serif text-[42px] font-light leading-tight tracking-tight mb-8 text-[var(--text)]">Rechercher</h1>
+    
+    <div id="search" class="w-full"></div>
+  </main>
+
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+  <script is:inline src="/pagefind/pagefind-ui.js"></script>
+  <script is:inline>
+    window.addEventListener('DOMContentLoaded', (event) => {
+      new PagefindUI({ element: "#search", showSubResults: true, baseUrl: '/' });
+    });
+  </script>
+  
+  <style is:global>
+    :root {
+      --pagefind-ui-scale: 0.8;
+      --pagefind-ui-primary: var(--accent);
+      --pagefind-ui-text: var(--text);
+      --pagefind-ui-background: var(--bg-2);
+      --pagefind-ui-border: var(--border);
+      --pagefind-ui-tag: var(--hint);
+      --pagefind-ui-border-width: 1px;
+      --pagefind-ui-border-radius: 4px;
+      --pagefind-ui-font: var(--mono);
+    }
+    .pagefind-ui__result-excerpt {
+      color: var(--muted) !important;
+    }
+  </style>
+</Base>

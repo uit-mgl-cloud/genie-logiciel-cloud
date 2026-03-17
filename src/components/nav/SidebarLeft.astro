@@ -1,0 +1,51 @@
+---
+interface Props {
+  activeModule?: number;
+  activeSeance?: number;
+}
+
+const { activeModule, activeSeance } = Astro.props;
+
+import { getCollection } from 'astro:content';
+const coursItems = await getCollection('cours');
+
+// Group cours items by module
+const modulesMap = coursItems.reduce((acc, curr) => {
+  const mod = curr.data.module;
+  if (!acc[mod]) acc[mod] = [];
+  acc[mod].push(curr);
+  return acc;
+}, {} as Record<number, any[]>);
+
+// Sort modules and their seances
+const sortedModules = Object.keys(modulesMap).map(Number).sort((a, b) => a - b);
+sortedModules.forEach(mod => {
+  modulesMap[mod].sort((a, b) => a.data.seance - b.data.seance);
+});
+---
+
+<div class="flex flex-col gap-6">
+  {sortedModules.map((mod) => (
+    <div class="mb-0">
+      <span class="text-[9px] tracking-[0.12em] text-[var(--hint)] px-5 pb-2 block uppercase">MODULE {mod.toString().padStart(2, '0')}</span>
+      <div class="flex flex-col">
+        {modulesMap[mod].map((seance) => {
+          const isActive = activeModule === mod && activeSeance === seance.data.seance;
+          return (
+            <a 
+              href={`/cours/module-${mod.toString().padStart(2, '0')}/seance-${seance.data.seance}`}
+              class={`flex items-center gap-2.5 px-5 py-1.5 cursor-pointer transition-colors duration-150 no-underline ${isActive ? 'bg-[var(--bg-2)] border-r-2 border-[var(--accent)]' : 'hover:bg-[var(--bg-2)]'}`}
+            >
+              <span class={`text-[9px] w-[18px] shrink-0 ${isActive ? 'text-[var(--accent)]' : 'text-[var(--hint)]'}`}>
+                S{seance.data.seance}
+              </span>
+              <span class={`text-[11px] leading-tight ${isActive ? 'text-[var(--text)]' : 'text-[var(--muted)]'}`}>
+                {seance.data.titre}
+              </span>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  ))}
+</div>

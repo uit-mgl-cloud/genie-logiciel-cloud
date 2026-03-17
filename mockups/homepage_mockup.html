@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0f11;--bg2:#16181c;--bg3:#1e2026;
+  --border:#2a2d35;--border2:#363a45;
+  --text:#e8e9ec;--muted:#7a7f8e;--hint:#4a4f5c;
+  --accent:#c8f080;--accent2:#80d4f0;
+  --mono:'DM Mono',monospace;--serif:'Fraunces',serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.6}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 48px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(14,15,17,0.92);backdrop-filter:blur(8px);z-index:10}
+.nav-logo{display:flex;align-items:baseline;gap:10px}
+.nav-logo-text{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--text);letter-spacing:-0.02em}
+.nav-logo-tag{font-size:10px;color:var(--accent);border:1px solid var(--accent);padding:1px 6px;border-radius:2px;letter-spacing:0.08em}
+.nav-links{display:flex;gap:28px}
+.nav-link{color:var(--muted);text-decoration:none;font-size:12px;letter-spacing:0.04em;transition:color .15s}
+.nav-link:hover{color:var(--text)}
+.nav-link.active{color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:14px}
+.btn-contribute{background:transparent;border:1px solid var(--border2);color:var(--text);padding:6px 14px;border-radius:3px;font-family:var(--mono);font-size:11px;cursor:pointer;letter-spacing:0.06em;transition:border-color .15s,color .15s}
+.btn-contribute:hover{border-color:var(--accent);color:var(--accent)}
+
+/* HERO */
+.hero{padding:80px 48px 64px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:40px 40px;opacity:0.35;pointer-events:none}
+.hero-inner{position:relative;max-width:680px}
+.hero-eyebrow{font-size:10px;letter-spacing:0.12em;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.hero-eyebrow::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent)}
+.hero-title{font-family:var(--serif);font-size:52px;font-weight:300;line-height:1.08;letter-spacing:-0.03em;color:var(--text);margin-bottom:8px}
+.hero-title em{font-style:italic;color:var(--accent2)}
+.hero-subtitle{font-size:12px;color:var(--muted);max-width:420px;line-height:1.8;margin-top:20px}
+.hero-meta{display:flex;gap:32px;margin-top:36px}
+.hero-stat{display:flex;flex-direction:column;gap:2px}
+.hero-stat-n{font-size:22px;font-weight:500;color:var(--text);font-family:var(--serif)}
+.hero-stat-l{font-size:10px;color:var(--hint);letter-spacing:0.08em}
+
+/* SECTION HEADER */
+.section-header{display:flex;align-items:baseline;justify-content:space-between;padding:32px 48px 20px;border-bottom:1px solid var(--border)}
+.section-label{font-size:10px;letter-spacing:0.12em;color:var(--muted);display:flex;align-items:center;gap:8px}
+.section-label::before{content:'';display:inline-block;width:14px;height:1px;background:var(--muted)}
+.section-count{font-size:11px;color:var(--hint)}
+
+/* MODULE GRID */
+.modules-grid{display:grid;grid-template-columns:repeat(3,1fr);border-left:1px solid var(--border)}
+.module-card{border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 28px 24px;cursor:pointer;transition:background .15s;position:relative;text-decoration:none;display:block}
+.module-card:hover{background:var(--bg2)}
+.module-card:hover .module-arrow{opacity:1;transform:translate(2px,-2px)}
+.module-num{font-size:10px;color:var(--hint);letter-spacing:0.1em;margin-bottom:14px}
+.module-title{font-family:var(--serif);font-size:17px;font-weight:300;line-height:1.3;color:var(--text);margin-bottom:8px;letter-spacing:-0.01em}
+.module-title em{font-style:italic}
+.module-desc{font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:18px}
+.module-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:9px;letter-spacing:0.08em;padding:2px 7px;border-radius:2px;border:1px solid var(--border2);color:var(--hint)}
+.tag.accent{border-color:rgba(200,240,128,0.3);color:var(--accent);background:rgba(200,240,128,0.06)}
+.module-arrow{position:absolute;top:24px;right:24px;color:var(--hint);font-size:14px;transition:opacity .15s,transform .2s;opacity:0}
+.module-card.featured{background:var(--bg2);border-color:var(--border2)}
+.module-card.featured .module-num{color:var(--accent)}
+
+/* TP STRIP */
+.tp-strip{border-bottom:1px solid var(--border)}
+.tp-row{display:flex;align-items:center;padding:16px 48px;border-bottom:1px solid var(--border);gap:20px;cursor:pointer;transition:background .15s}
+.tp-row:last-child{border-bottom:none}
+.tp-row:hover{background:var(--bg2)}
+.tp-index{font-size:10px;color:var(--hint);width:28px;flex-shrink:0;letter-spacing:0.08em}
+.tp-title{flex:1;font-size:13px;color:var(--text)}
+.tp-module{font-size:10px;color:var(--muted);width:140px;flex-shrink:0}
+.tp-badge{font-size:9px;padding:2px 8px;border-radius:2px;letter-spacing:0.06em;flex-shrink:0}
+.tp-badge.open{background:rgba(200,240,128,0.1);color:var(--accent);border:1px solid rgba(200,240,128,0.25)}
+.tp-badge.closed{background:rgba(122,127,142,0.08);color:var(--hint);border:1px solid var(--border)}
+
+/* CONTRIBUTIONS */
+.contrib-grid{display:grid;grid-template-columns:1fr 1fr;border-left:1px solid var(--border)}
+.contrib-card{border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:22px 26px;cursor:pointer;transition:background .15s}
+.contrib-card:hover{background:var(--bg2)}
+.contrib-author{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.contrib-avatar{width:22px;height:22px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--muted);flex-shrink:0}
+.contrib-name{font-size:11px;color:var(--muted)}
+.contrib-type{font-size:9px;color:var(--hint);margin-left:auto;letter-spacing:0.08em;padding:1px 6px;border:1px solid var(--border);border-radius:2px}
+.contrib-title{font-size:13px;color:var(--text);line-height:1.4;margin-bottom:6px}
+.contrib-meta{font-size:10px;color:var(--hint)}
+
+/* FOOTER */
+footer{padding:28px 48px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.footer-left{font-size:11px;color:var(--hint)}
+.footer-left span{color:var(--accent)}
+.footer-links{display:flex;gap:20px}
+.footer-link{font-size:11px;color:var(--hint);text-decoration:none}
+.footer-link:hover{color:var(--muted)}
+</style>
+
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-text">GL·Cloud</span>
+    <span class="nav-logo-tag">M2 · 2025</span>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link active" href="#">Cours</a>
+    <a class="nav-link" href="#">TP</a>
+    <a class="nav-link" href="#">Projets</a>
+    <a class="nav-link" href="#">Contributions</a>
+    <a class="nav-link" href="#">Ressources</a>
+  </div>
+  <div class="nav-right">
+    <button class="btn-contribute">↗ Contribuer</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">MASTER INFORMATIQUE · S2</div>
+    <h1 class="hero-title">Génie Logiciel<br>pour le <em>Cloud</em></h1>
+    <p class="hero-subtitle">Plateforme collaborative du cours M2. Cours, TP, projets et contributions étudiantes — tout est open source, tout est versionné.</p>
+    <div class="hero-meta">
+      <div class="hero-stat"><span class="hero-stat-n">8</span><span class="hero-stat-l">MODULES</span></div>
+      <div class="hero-stat"><span class="hero-stat-n">12</span><span class="hero-stat-l">TP</span></div>
+      <div class="hero-stat"><span class="hero-stat-n">34</span><span class="hero-stat-l">CONTRIBUTIONS</span></div>
+      <div class="hero-stat"><span class="hero-stat-n">0€</span><span class="hero-stat-l">COÛT HOSTING</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-header">
+  <span class="section-label">MODULES DU COURS</span>
+  <span class="section-count">8 modules · 24 séances</span>
+</div>
+
+<div class="modules-grid">
+  <a class="module-card featured" href="#">
+    <div class="module-num">01</div>
+    <div class="module-title">Introduction au <em>Cloud Computing</em></div>
+    <div class="module-desc">Modèles de service, providers, économie du cloud. IaaS, PaaS, SaaS.</div>
+    <div class="module-tags"><span class="tag accent">En cours</span><span class="tag">4 séances</span></div>
+    <span class="module-arrow">↗</span>
+  </a>
+  <a class="module-card" href="#">
+    <div class="module-num">02</div>
+    <div class="module-title">Architecture <em>Microservices</em></div>
+    <div class="module-desc">Décomposition, communication inter-services, patterns de résilience.</div>
+    <div class="module-tags"><span class="tag">3 séances</span><span class="tag">Docker</span></div>
+    <span class="module-arrow">↗</span>
+  </a>
+  <a class="module-card" href="#">
+    <div class="module-num">03</div>
+    <div class="module-title">Conteneurisation &amp; <em>Orchestration</em></div>
+    <div class="module-desc">Docker, Kubernetes, Helm. Déploiement et gestion de clusters.</div>
+    <div class="module-tags"><span class="tag">4 séances</span><span class="tag">Kubernetes</span></div>
+    <span class="module-arrow">↗</span>
+  </a>
+  <a class="module-card" href="#">
+    <div class="module-num">04</div>
+    <div class="module-title"><em>Infrastructure</em> as Code</div>
+    <div class="module-desc">Terraform, Pulumi. Gestion déclarative de l'infrastructure.</div>
+    <div class="module-tags"><span class="tag">3 séances</span><span class="tag">Terraform</span></div>
+    <span class="module-arrow">↗</span>
+  </a>
+  <a class="module-card" href="#">
+    <div class="module-num">05</div>
+    <div class="module-title">CI/CD &amp; <em>DevOps</em></div>
+    <div class="module-desc">Pipelines, GitHub Actions, déploiement continu, GitOps.</div>
+    <div class="module-tags"><span class="tag">3 séances</span><span class="tag">GitHub Actions</span></div>
+    <span class="module-arrow">↗</span>
+  </a>
+  <a class="module-card" href="#">
+    <div class="module-num">06</div>
+    <div class="module-title">Observabilité &amp; <em>SRE</em></div>
+    <div class="module-desc">Logs, métriques, traces. Prometheus, Grafana, SLOs.</div>
+    <div class="module-tags"><span class="tag">3 séances</span><span class="tag">Prometheus</span></div>
+    <span class="module-arrow">↗</span>
+  </a>
+</div>
+
+<div class="section-header" style="margin-top:0">
+  <span class="section-label">TRAVAUX PRATIQUES</span>
+  <span class="section-count">12 TP · soumission via PR</span>
+</div>
+
+<div class="tp-strip">
+  <div class="tp-row">
+    <span class="tp-index">TP·01</span>
+    <span class="tp-title">Déploiement d'une app Node.js sur un VPS — IaaS bare metal</span>
+    <span class="tp-module">Module 01 · Intro Cloud</span>
+    <span class="tp-badge open">Ouvert</span>
+  </div>
+  <div class="tp-row">
+    <span class="tp-index">TP·02</span>
+    <span class="tp-title">Conteneurisation d'une API REST avec Docker Compose</span>
+    <span class="tp-module">Module 03 · Conteneurs</span>
+    <span class="tp-badge open">Ouvert</span>
+  </div>
+  <div class="tp-row">
+    <span class="tp-index">TP·03</span>
+    <span class="tp-title">Premier cluster Kubernetes avec k3s — déploiement et scaling</span>
+    <span class="tp-module">Module 03 · Orchestration</span>
+    <span class="tp-badge closed">À venir</span>
+  </div>
+  <div class="tp-row">
+    <span class="tp-index">TP·04</span>
+    <span class="tp-title">Infrastructure AWS avec Terraform — VPC, EC2, S3</span>
+    <span class="tp-module">Module 04 · IaC</span>
+    <span class="tp-badge closed">À venir</span>
+  </div>
+</div>
+
+<div class="section-header">
+  <span class="section-label">CONTRIBUTIONS ÉTUDIANTES</span>
+  <span class="section-count">34 contributions · 18 auteurs</span>
+</div>
+
+<div class="contrib-grid">
+  <div class="contrib-card">
+    <div class="contrib-author">
+      <div class="contrib-avatar">AM</div>
+      <span class="contrib-name">a.mansouri</span>
+      <span class="contrib-type">ÉTUDE DE CAS</span>
+    </div>
+    <div class="contrib-title">Migration d'un monolithe Laravel vers microservices — retour d'expérience</div>
+    <div class="contrib-meta">Module 02 · il y a 3 jours</div>
+  </div>
+  <div class="contrib-card">
+    <div class="contrib-author">
+      <div class="contrib-avatar">KB</div>
+      <span class="contrib-name">k.benali</span>
+      <span class="contrib-type">SOLUTION TP</span>
+    </div>
+    <div class="contrib-title">Solution annotée TP·02 — multi-stage builds et optimisation d'image</div>
+    <div class="contrib-meta">Module 03 · il y a 5 jours</div>
+  </div>
+  <div class="contrib-card">
+    <div class="contrib-author">
+      <div class="contrib-avatar">SR</div>
+      <span class="contrib-name">s.rachidi</span>
+      <span class="contrib-type">RESSOURCE</span>
+    </div>
+    <div class="contrib-title">Cheatsheet Terraform — modules, workspaces et state remote</div>
+    <div class="contrib-meta">Module 04 · il y a 1 semaine</div>
+  </div>
+  <div class="contrib-card">
+    <div class="contrib-author">
+      <div class="contrib-avatar">YE</div>
+      <span class="contrib-name">y.el-fassi</span>
+      <span class="contrib-type">IMPLÉMENTATION</span>
+    </div>
+    <div class="contrib-title">Dashboard Grafana pour monitoring d'un cluster k3s — template complet</div>
+    <div class="contrib-meta">Module 06 · il y a 2 semaines</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">Génie Logiciel pour le Cloud · M2 Informatique · <span>Open Source</span> · GitHub</div>
+  <div class="footer-links">
+    <a class="footer-link" href="#">GitHub →</a>
+    <a class="footer-link" href="#">Guide contribution →</a>
+    <a class="footer-link" href="#">Discussions →</a>
+  </div>
+</footer>

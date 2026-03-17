@@ -1,0 +1,145 @@
+@layer components {
+  .prose p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+
+  .prose h1 {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+
+  .prose h1 em {
+    font-style: italic;
+    color: var(--accent-2);
+  }
+
+  .prose h2 {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--text);
+    margin: 36px 0 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .prose h3 {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 24px 0 10px;
+  }
+
+  .prose h4 {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    margin: 20px 0 8px;
+  }
+
+  .prose a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent);
+    transition: opacity 0.15s;
+  }
+
+  .prose a:hover {
+    opacity: 0.8;
+  }
+
+  .prose ul {
+    list-style-type: none;
+    padding-left: 20px;
+    margin-bottom: 16px;
+  }
+
+  .prose ul li {
+    position: relative;
+    margin-bottom: 8px;
+    color: var(--muted);
+  }
+
+  .prose ul li::before {
+    content: "—";
+    position: absolute;
+    left: -20px;
+    color: var(--hint);
+  }
+
+  .prose ol {
+    list-style-type: decimal;
+    padding-left: 20px;
+    margin-bottom: 16px;
+    color: var(--muted);
+  }
+
+  .prose ol li {
+    margin-bottom: 8px;
+  }
+
+  .prose strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .prose code.inline-code {
+    font-size: 12px;
+    background-color: rgba(232, 233, 236, 0.08);
+    padding: 2px 4px;
+    border-radius: 3px;
+    color: var(--text);
+  }
+
+  .prose pre.astro-code {
+    background: var(--bg-2) !important;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px 20px;
+    margin: 20px 0;
+    overflow-x: auto;
+  }
+  
+  .prose pre.astro-code code {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 12px;
+  }
+
+  .prose th {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .prose td {
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .prose tr:last-child td {
+    border-bottom: none;
+  }
+
+  .prose hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+}

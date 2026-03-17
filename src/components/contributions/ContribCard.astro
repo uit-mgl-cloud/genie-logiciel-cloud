@@ -1,0 +1,36 @@
+---
+import AuthorTag from './AuthorTag.astro';
+
+interface Props {
+  slug: string;
+  type: string;
+  titre: string;
+  auteur: string;
+  module?: number;
+  date: Date;
+}
+const { slug, type, titre, auteur, module, date } = Astro.props;
+
+// Basic date formatter for the UI to represent "il y a 3 jours"
+// If the relative time API fails, we fall back to a simple string
+let timeAgo = '';
+try {
+  const rtf = new Intl.RelativeTimeFormat('fr', { numeric: 'auto' });
+  const daysDifference = Math.round((date.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+  timeAgo = rtf.format(daysDifference, 'day');
+} catch (e) {
+  timeAgo = date.toLocaleDateString();
+}
+---
+<a href={`/contributions/${type}/${slug}`} class="block border-r border-b border-[var(--border)] p-5.5 px-6.5 cursor-pointer transition-colors duration-150 no-underline hover:bg-[var(--bg-2)]">
+  <div class="flex items-center gap-2 mb-3">
+    <AuthorTag username={auteur} />
+    <span class="text-[9px] text-[var(--hint)] ml-auto tracking-[0.08em] px-1.5 py-[1px] border border-[var(--border)] rounded-sm uppercase">
+      {type.replace(/-/g, ' ')}
+    </span>
+  </div>
+  <div class="text-[13px] text-[var(--text)] leading-snug mb-1.5" set:html={titre} />
+  <div class="text-[10px] text-[var(--hint)]">
+    {module ? `Module ${module.toString().padStart(2, '0')} · ` : ''}{timeAgo}
+  </div>
+</a>

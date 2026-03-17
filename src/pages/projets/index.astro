@@ -1,0 +1,28 @@
+---
+import IndexPage from '../../layouts/IndexPage.astro';
+import { getCollection } from 'astro:content';
+
+const projets = await getCollection('projets');
+---
+<IndexPage 
+  title="Projets" 
+  description="Projets longs pour la validation des compétences du module." 
+  headerLabel="PROJETS DISPONIBLES" 
+  headerCount={`${projets.length} projets`}
+>
+  <div class="border-b border-[var(--border)] border-t-0">
+    {projets.map((p) => (
+      <a href={`/projets/${p.id.split('/').pop().replace(/\.mdx?$/, '')}`} class="block px-12 py-5 border-b border-[var(--border)] transition-colors hover:bg-[var(--bg-2)] no-underline">
+        <span class="text-[14px] text-[var(--text)] font-medium mb-1.5 block">{p.data.titre}</span>
+        <p class="text-[12px] text-[var(--muted)] line-clamp-2 mb-2">{p.data.description}</p>
+        <div class="flex gap-4">
+          <span class="text-[10px] text-[var(--hint)]">Modules : {p.data.modules.join(', ')}</span>
+          <span class="text-[10px] text-[var(--hint)]">Équipe : max {p.data.equipe} personnes</span>
+        </div>
+      </a>
+    ))}
+    {projets.length === 0 && (
+      <div class="px-12 py-8 text-[12px] text-[var(--muted)]">Aucun projet pour le moment.</div>
+    )}
+  </div>
+</IndexPage>

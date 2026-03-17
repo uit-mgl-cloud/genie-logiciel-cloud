@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0f11;--bg2:#16181c;--bg3:#1e2026;
+  --border:#2a2d35;--border2:#363a45;
+  --text:#e8e9ec;--muted:#7a7f8e;--hint:#4a4f5c;
+  --accent:#c8f080;--accent2:#80d4f0;
+  --mono:'DM Mono',monospace;--serif:'Fraunces',serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.6}
+
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:1px solid var(--border);background:rgba(14,15,17,0.92)}
+.nav-logo{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--text)}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--hint)}
+.breadcrumb-sep{color:var(--border2)}
+.breadcrumb-cur{color:var(--muted)}
+
+.page-layout{display:grid;grid-template-columns:220px 1fr 200px;min-height:600px}
+
+/* LEFT SIDEBAR — module nav */
+.sidebar-left{border-right:1px solid var(--border);padding:28px 0}
+.sidebar-section{margin-bottom:24px}
+.sidebar-heading{font-size:9px;letter-spacing:0.12em;color:var(--hint);padding:0 20px 8px;display:block}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:7px 20px;cursor:pointer;transition:background .12s;text-decoration:none}
+.sidebar-item:hover{background:var(--bg2)}
+.sidebar-item.active{background:var(--bg2);border-right:2px solid var(--accent)}
+.sidebar-item-num{font-size:9px;color:var(--hint);width:18px;flex-shrink:0}
+.sidebar-item-label{font-size:11px;color:var(--muted);line-height:1.4}
+.sidebar-item.active .sidebar-item-label{color:var(--text)}
+.sidebar-item.active .sidebar-item-num{color:var(--accent)}
+
+/* MAIN CONTENT */
+.main-content{padding:40px 52px;max-width:680px}
+.content-eyebrow{font-size:10px;letter-spacing:0.1em;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.content-eyebrow::before{content:'';display:inline-block;width:16px;height:1px;background:var(--accent)}
+.content-h1{font-family:var(--serif);font-size:36px;font-weight:300;line-height:1.1;letter-spacing:-0.02em;margin-bottom:6px}
+.content-h1 em{font-style:italic;color:var(--accent2)}
+.content-meta{display:flex;gap:16px;margin-bottom:36px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.content-meta-item{font-size:10px;color:var(--hint)}
+.content-meta-item span{color:var(--muted)}
+
+.prose p{font-size:13px;color:var(--muted);line-height:1.9;margin-bottom:16px}
+.prose h2{font-family:var(--serif);font-size:20px;font-weight:300;color:var(--text);margin:36px 0 14px;letter-spacing:-0.01em}
+.prose h3{font-size:12px;letter-spacing:0.06em;color:var(--muted);margin:24px 0 10px}
+
+.code-block{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:18px 20px;margin:20px 0;overflow-x:auto}
+.code-block-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.code-lang{font-size:9px;letter-spacing:0.1em;color:var(--accent);padding:1px 6px;border:1px solid rgba(200,240,128,0.3);border-radius:2px}
+.code-copy{font-size:9px;color:var(--hint);cursor:pointer;letter-spacing:0.06em}
+.code-block code{font-size:12px;color:var(--text);line-height:1.7;white-space:pre}
+.code-comment{color:var(--hint)}
+.code-kw{color:var(--accent2)}
+.code-str{color:var(--accent)}
+
+.callout{border-left:2px solid var(--accent);padding:14px 18px;background:rgba(200,240,128,0.04);margin:20px 0;border-radius:0 4px 4px 0}
+.callout-label{font-size:9px;letter-spacing:0.1em;color:var(--accent);margin-bottom:6px}
+.callout p{font-size:12px;color:var(--muted);line-height:1.7;margin:0}
+
+/* RIGHT SIDEBAR — outline */
+.sidebar-right{border-left:1px solid var(--border);padding:28px 20px;position:sticky;top:0;align-self:start}
+.outline-heading{font-size:9px;letter-spacing:0.12em;color:var(--hint);margin-bottom:16px;display:block}
+.outline-item{display:block;font-size:11px;color:var(--hint);padding:5px 0;cursor:pointer;text-decoration:none;transition:color .12s;border-left:1px solid transparent;padding-left:10px;margin-left:-10px}
+.outline-item:hover{color:var(--muted)}
+.outline-item.active{color:var(--accent);border-left-color:var(--accent)}
+.outline-item.sub{padding-left:20px;margin-left:-10px;font-size:10px}
+
+.outline-divider{height:1px;background:var(--border);margin:20px 0}
+.outline-tp{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:12px 14px;margin-top:4px}
+.outline-tp-label{font-size:9px;color:var(--accent);letter-spacing:0.08em;margin-bottom:6px}
+.outline-tp-title{font-size:11px;color:var(--text);line-height:1.4;margin-bottom:8px}
+.outline-tp-btn{font-size:10px;color:var(--accent);text-decoration:none;letter-spacing:0.04em}
+
+/* GISCUS placeholder */
+.comments-zone{margin-top:52px;padding-top:32px;border-top:1px solid var(--border)}
+.comments-label{font-size:10px;letter-spacing:0.1em;color:var(--hint);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.comments-label::before{content:'';display:inline-block;width:14px;height:1px;background:var(--hint)}
+.giscus-placeholder{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:28px;text-align:center}
+.giscus-placeholder p{font-size:12px;color:var(--hint)}
+.giscus-placeholder span{color:var(--accent2)}
+</style>
+
+<nav>
+  <span class="nav-logo">GL·Cloud</span>
+  <div class="breadcrumb">
+    <span>Cours</span>
+    <span class="breadcrumb-sep">/</span>
+    <span>Module 01</span>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-cur">Introduction au Cloud Computing</span>
+  </div>
+  <div style="font-size:11px;color:var(--hint)">Dernière modif. il y a 2 jours</div>
+</nav>
+
+<div class="page-layout">
+
+  <div class="sidebar-left">
+    <div class="sidebar-section">
+      <span class="sidebar-heading">MODULE 01</span>
+      <a class="sidebar-item active" href="#">
+        <span class="sidebar-item-num">S1</span>
+        <span class="sidebar-item-label">Introduction au Cloud</span>
+      </a>
+      <a class="sidebar-item" href="#">
+        <span class="sidebar-item-num">S2</span>
+        <span class="sidebar-item-label">Modèles de service</span>
+      </a>
+      <a class="sidebar-item" href="#">
+        <span class="sidebar-item-num">S3</span>
+        <span class="sidebar-item-label">Économie du Cloud</span>
+      </a>
+      <a class="sidebar-item" href="#">
+        <span class="sidebar-item-num">S4</span>
+        <span class="sidebar-item-label">TP · Déploiement VPS</span>
+      </a>
+    </div>
+    <div class="sidebar-section">
+      <span class="sidebar-heading">MODULE 02</span>
+      <a class="sidebar-item" href="#">
+        <span class="sidebar-item-num">S1</span>
+        <span class="sidebar-item-label">Microservices intro</span>
+      </a>
+      <a class="sidebar-item" href="#">
+        <span class="sidebar-item-num">S2</span>
+        <span class="sidebar-item-label">Communication &amp; API</span>
+      </a>
+    </div>
+    <div class="sidebar-section">
+      <span class="sidebar-heading">MODULE 03</span>
+      <a class="sidebar-item" href="#">
+        <span class="sidebar-item-num">S1</span>
+        <span class="sidebar-item-label">Docker fondamentaux</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="content-eyebrow">MODULE 01 · SÉANCE 1</div>
+    <h1 class="content-h1">Introduction au<br><em>Cloud Computing</em></h1>
+    <div class="content-meta">
+      <span class="content-meta-item">Auteur <span>Prof. Alami</span></span>
+      <span class="content-meta-item">Durée <span>3h</span></span>
+      <span class="content-meta-item">Niveau <span>Fondamental</span></span>
+      <span class="content-meta-item">Modifié <span>12 mars 2025</span></span>
+    </div>
+
+    <div class="prose">
+      <p>Le cloud computing désigne la mise à disposition de ressources informatiques — serveurs, stockage, bases de données, réseau, logiciels — via Internet, à la demande et selon un modèle de facturation à l'usage.</p>
+
+      <h2>Modèles de déploiement</h2>
+      <p>On distingue quatre modèles de déploiement selon le niveau de partage et de contrôle de l'infrastructure : public, privé, hybride et multi-cloud.</p>
+
+      <div class="callout">
+        <div class="callout-label">NOTE</div>
+        <p>Le choix du modèle de déploiement dépend principalement des contraintes réglementaires (RGPD, souveraineté des données) et des exigences de latence de l'application.</p>
+      </div>
+
+      <h2>Les trois modèles de service</h2>
+      <h3>IAAS — INFRASTRUCTURE AS A SERVICE</h3>
+      <p>Le fournisseur gère le matériel physique, la virtualisation et le réseau. Le client contrôle le système d'exploitation, le middleware et les applications.</p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">TERRAFORM</span>
+          <span class="code-copy">copier</span>
+        </div>
+        <code><span class="code-kw">resource</span> <span class="code-str">"aws_instance"</span> <span class="code-str">"web"</span> {
+  ami           = <span class="code-str">"ami-0c55b159cbfafe1f0"</span>
+  instance_type = <span class="code-str">"t3.micro"</span>
+  <span class="code-comment"># Tags pour organiser les ressources</span>
+  tags = {
+    Name        = <span class="code-str">"gl-cloud-demo"</span>
+    Environment = <span class="code-str">"cours"</span>
+  }
+}</code>
+      </div>
+
+      <h3>PAAS — PLATFORM AS A SERVICE</h3>
+      <p>Le fournisseur prend en charge l'infrastructure et le middleware. Le client se concentre uniquement sur le code et les données applicatives.</p>
+    </div>
+
+    <div class="comments-zone">
+      <div class="comments-label">DISCUSSIONS · QUESTIONS</div>
+      <div class="giscus-placeholder">
+        <p><span>giscus</span> — commentaires via GitHub Discussions<br>Connectez-vous avec votre compte GitHub pour poser une question.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-right">
+    <span class="outline-heading">SUR CETTE PAGE</span>
+    <a class="outline-item active" href="#">Introduction</a>
+    <a class="outline-item" href="#">Modèles de déploiement</a>
+    <a class="outline-item sub" href="#">Public / Privé</a>
+    <a class="outline-item sub" href="#">Hybride</a>
+    <a class="outline-item" href="#">Modèles de service</a>
+    <a class="outline-item sub" href="#">IaaS</a>
+    <a class="outline-item sub" href="#">PaaS</a>
+    <a class="outline-item sub" href="#">SaaS</a>
+    <a class="outline-item" href="#">Économie</a>
+    <a class="outline-item" href="#">Exercices</a>
+
+    <div class="outline-divider"></div>
+
+    <div class="outline-tp">
+      <div class="outline-tp-label">TP ASSOCIÉ</div>
+      <div class="outline-tp-title">Déploiement d'une app sur VPS</div>
+      <a class="outline-tp-btn" href="#">Voir le TP →</a>
+    </div>
+  </div>
+
+</div>

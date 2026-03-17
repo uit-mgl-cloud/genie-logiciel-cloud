@@ -1,0 +1,30 @@
+---
+import IndexPage from '../../layouts/IndexPage.astro';
+import ContribCard from '../../components/contributions/ContribCard.astro';
+import { getCollection } from 'astro:content';
+
+const contributions = await getCollection('contributions');
+contributions.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<IndexPage 
+  title="Contributions Étudiantes" 
+  description="L'ensemble des ressources, solutions, et études de cas proposées par la classe." 
+  headerLabel="TOUTES LES CONTRIBUTIONS" 
+  headerCount={`${contributions.length} contributions`}
+>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 border-l border-[var(--border)]">
+    {contributions.map((c) => (
+      <ContribCard 
+        slug={c.id}
+        type={c.data.type}
+        titre={c.data.titre}
+        auteur={c.data.auteur}
+        module={c.data.module}
+        date={c.data.date}
+      />
+    ))}
+    {contributions.length === 0 && (
+      <div class="p-8 text-[12px] text-[var(--muted)] col-span-2 border-r border-b border-[var(--border)]">Aucune contribution pour le moment.</div>
+    )}
+  </div>
+</IndexPage>

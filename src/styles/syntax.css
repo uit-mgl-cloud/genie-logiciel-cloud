@@ -1,0 +1,6 @@
+@layer components {
+  .shiki {
+    /* Base configuration for shiki via Astro */
+    background-color: var(--bg-2) !important;
+  }
+}

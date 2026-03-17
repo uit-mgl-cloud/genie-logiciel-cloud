@@ -1,0 +1,36 @@
+---
+import IndexPage from '../../layouts/IndexPage.astro';
+import ModuleCard from '../../components/content/ModuleCard.astro';
+import { getCollection } from 'astro:content';
+
+const cours = await getCollection('cours');
+const modulesMap = cours.reduce((acc, curr) => {
+  const mod = curr.data.module;
+  if (!acc[mod]) acc[mod] = [];
+  acc[mod].push(curr);
+  return acc;
+}, {} as Record<number, any[]>);
+const sortedModules = Object.keys(modulesMap).map(Number).sort((a, b) => a - b);
+---
+<IndexPage 
+  title="Modules de Cours" 
+  description="Tous les modules enseignés dans le cadre du M2." 
+  headerLabel="TOUS LES MODULES" 
+  headerCount={`${sortedModules.length} modules`}
+>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-l border-[var(--border)]">
+    {sortedModules.map((mod, i) => (
+      <ModuleCard 
+        numero={mod}
+        titre={`Module ${mod}`}
+        description="Aperçu des concepts abordés..."
+        tags={[]}
+        statut={i === 0 ? 'en-cours' : 'a-venir'}
+        seances={modulesMap[mod].length}
+      />
+    ))}
+    {sortedModules.length === 0 && (
+      <div class="p-8 text-[12px] text-[var(--muted)] col-span-3 border-r border-b border-[var(--border)]">Aucun module pour le moment.</div>
+    )}
+  </div>
+</IndexPage>

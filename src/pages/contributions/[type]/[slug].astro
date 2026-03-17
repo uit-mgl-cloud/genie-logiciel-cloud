@@ -1,0 +1,34 @@
+---
+import ContributionPage from "../../../layouts/ContributionPage.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const contributions = await getCollection("contributions");
+  return contributions.map((entry) => ({
+    params: {
+      type: entry.data.type,
+      slug: entry.id
+        .split("/")
+        .pop()
+        ?.replace(/\.mdx?$/, ""),
+    },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ContributionPage
+  title={entry.data.titre}
+  description={entry.data.description}
+  type={entry.data.type}
+  auteur={entry.data.auteur}
+  date={entry.data.date}
+  module={entry.data.module}
+  tp_reference={entry.data.tp_reference}
+  outils={entry.data.outils}
+>
+  <Content />
+</ContributionPage>

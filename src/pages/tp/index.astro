@@ -1,0 +1,30 @@
+---
+import IndexPage from '../../layouts/IndexPage.astro';
+import TpRow from '../../components/tp/TpRow.astro';
+import { getCollection } from 'astro:content';
+
+const tps = await getCollection('tp');
+tps.sort((a, b) => a.data.numero - b.data.numero);
+---
+<IndexPage 
+  title="Travaux Pratiques" 
+  description="Liste de tous les TP de l'année. Soumission via Pull Request obligatoire." 
+  headerLabel="LES TP" 
+  headerCount={`${tps.length} TP`}
+>
+  <div class="border-b border-[var(--border)] border-t-0">
+    {tps.map((tp) => (
+      <TpRow 
+        slug={tp.id} 
+        numero={tp.data.numero} 
+        titre={tp.data.titre} 
+        module={tp.data.module} 
+        statut={tp.data.statut} 
+        isFirst={false} 
+      />
+    ))}
+    {tps.length === 0 && (
+      <div class="px-12 py-8 text-[12px] text-[var(--muted)]">Aucun TP pour le moment.</div>
+    )}
+  </div>
+</IndexPage>

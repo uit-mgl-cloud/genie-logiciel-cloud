@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Contribuer" description="Guide de contribution à la plateforme GL·Cloud">
+  <main class="max-w-[720px] mx-auto px-12 py-16 prose">
+    <div class="text-[10px] tracking-[0.12em] text-[var(--accent)] mb-4 flex items-center gap-2 before:content-[''] before:inline-block before:w-5 before:h-[1px] before:bg-[var(--accent)]">
+      GUIDE OUVERT
+    </div>
+    <h1 class="font-serif text-[42px] font-light leading-tight tracking-tight mb-4 text-[var(--text)]">Comment <em>contribuer</em></h1>
+    <p class="text-[14px] text-[var(--muted)] leading-relaxed mb-10 pb-8 border-b border-[var(--border)]">
+      La plateforme est construite pour et par les étudiants. Ce guide détaille comment soumettre un TP, une étude de cas ou une ressource utile via le workflow GitHub.
+    </p>
+
+    <h2 id="workflow">Le workflow (Fork & Pull Request)</h2>
+    <ol>
+      <li><strong>Forkez</strong> le dépôt sur votre compte GitHub.</li>
+      <li><strong>Clonez</strong> votre fork localement.</li>
+      <li><strong>Créez une branche</strong> pour votre contribution : <code>git checkout -b contrib/ma-contribution</code></li>
+      <li><strong>Ajoutez</strong> votre fichier Markdown dans le sous-dossier approprié dans <code>src/content/contributions/</code>.</li>
+      <li><strong>Commitez et pushez</strong> vos changements sur votre fork.</li>
+      <li><strong>Ouvrez une Pull Request (PR)</strong> sur le dépôt original.</li>
+    </ol>
+    <p>Le bot CI va automatiquement construire une <em>preview URL</em> dans les commentaires de votre PR pour que le professeur puisse visualiser le rendu avant de valider.</p>
+
+    <h2 id="types">Types de contributions</h2>
+    <ul>
+      <li><strong>Étude de cas</strong> : Retour d'expérience sur une technologie ou un projet.</li>
+      <li><strong>Solution de TP</strong> : Votre solution détaillée et commentée d'un TP terminé.</li>
+      <li><strong>Ressource</strong> : Fiche de synthèse, cheatsheet, tutoriel.</li>
+      <li><strong>Implémentation</strong> : Exemple de code complexe, infrastructure as code, configuration.</li>
+    </ul>
+
+    <h2 id="frontmatter">Frontmatter obligatoire</h2>
+    <p>Chaque fichier Markdown doit commencer par des métadonnées strictes définies avec YAML. Celles-ci valident la structure de la page. Si un champ manque, la CI refusera votre PR.</p>
+    <pre class="astro-code"><code>---
+type: "etude-de-cas"
+titre: "Titre clair et concis"
+description: "Résumé en 1 ou 2 phrases."
+auteur: "votre-username-github"
+module: 2
+date: 2025-03-08
+---</code></pre>
+  </main>
+</Base>

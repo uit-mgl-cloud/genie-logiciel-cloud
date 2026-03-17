@@ -1,0 +1,9 @@
+---
+interface Props {
+  statut: 'ouvert' | 'a-venir' | 'termine';
+}
+const { statut } = Astro.props;
+---
+{statut === 'ouvert' && <span class="text-[9px] px-2 py-0.5 rounded-sm tracking-[0.06em] shrink-0 bg-[rgba(200,240,128,0.1)] text-[var(--accent)] border border-[rgba(200,240,128,0.25)] uppercase">Ouvert</span>}
+{statut === 'a-venir' && <span class="text-[9px] px-2 py-0.5 rounded-sm tracking-[0.06em] shrink-0 bg-[rgba(122,127,142,0.08)] text-[var(--hint)] border border-[var(--border)] uppercase">À venir</span>}
+{statut === 'termine' && <span class="text-[9px] px-2 py-0.5 rounded-sm tracking-[0.06em] shrink-0 bg-[rgba(122,127,142,0.08)] text-[var(--hint)] border border-[var(--border)] uppercase">Terminé</span>}

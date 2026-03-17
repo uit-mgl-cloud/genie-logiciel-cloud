@@ -1,0 +1,72 @@
+---
+import Base from './Base.astro';
+import SidebarLeft from '../components/nav/SidebarLeft.astro';
+import OutlineRight from '../components/content/OutlineRight.astro';
+import Breadcrumb from '../components/nav/Breadcrumb.astro';
+import GiscusComments from '../components/content/GiscusComments.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  module: number;
+  seance: number;
+  duree: string;
+  niveau: string;
+  date: Date;
+  tpAssocie?: { label: string; url: string; };
+  headings: any[];
+}
+
+const { title, description, module, seance, duree, niveau, date, tpAssocie, headings } = Astro.props;
+
+const dateStr = new Intl.DateTimeFormat('fr-FR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(date);
+---
+
+<Base title={title} description={description}>
+  <div class="flex items-center gap-2 text-[11px] text-[var(--hint)] px-10 py-4 border-b border-[var(--border)]">
+    <Breadcrumb context="cours" module={module} seance={seance} title={title} />
+    <div class="max-w-none ml-auto text-[11px] text-[var(--hint)]">Dernière modif. le {dateStr}</div>
+  </div>
+
+  <div class="grid grid-cols-[220px_1fr_200px] min-h-[600px]">
+    <aside class="border-r border-[var(--border)] py-7">
+      <SidebarLeft activeModule={module} activeSeance={seance} />
+    </aside>
+
+    <main class="px-13 py-10 w-full max-w-[680px]">
+      <div class="text-[10px] tracking-[0.1em] text-[var(--accent)] mb-4 flex items-center gap-2 before:content-[''] before:inline-block before:w-4 before:h-[1px] before:bg-[var(--accent)]">
+        MODULE {module.toString().padStart(2, '0')} · SÉANCE {seance}
+      </div>
+      <h1 class="font-serif text-[36px] font-light leading-none tracking-tight mb-1.5" set:html={title} />
+      
+      <div class="flex gap-4 mb-9 pb-7 border-b border-[var(--border)]">
+        <span class="text-[10px] text-[var(--hint)]">Durée <span class="text-[var(--muted)]">{duree}</span></span>
+        <span class="text-[10px] text-[var(--hint)]">Niveau <span class="text-[var(--muted)] capitalize">{niveau}</span></span>
+      </div>
+
+      <div class="prose">
+        <slot />
+      </div>
+
+      <GiscusComments />
+    </main>
+
+    <aside class="border-l border-[var(--border)] py-7 px-5 sticky top-0 self-start">
+      <OutlineRight headings={headings} />
+
+      {tpAssocie && (
+        <div class="mt-5 pt-5 border-t border-[var(--border)]">
+          <div class="bg-[var(--bg-2)] border border-[var(--border)] rounded px-3.5 py-3 mt-1">
+            <div class="text-[9px] text-[var(--accent)] tracking-wider mb-1.5">TP ASSOCIÉ</div>
+            <div class="text-[11px] text-[var(--text)] leading-snug mb-2">{tpAssocie.label}</div>
+            <a href={tpAssocie.url} class="text-[10px] text-[var(--accent)] no-underline tracking-wide hover:opacity-80">Voir le TP →</a>
+          </div>
+        </div>
+      )}
+    </aside>
+  </div>
+</Base>

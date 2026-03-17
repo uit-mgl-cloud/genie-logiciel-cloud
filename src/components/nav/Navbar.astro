@@ -1,0 +1,26 @@
+---
+const activePath = Astro.url.pathname;
+const isActive = (path: string) => activePath.startsWith(path) || (path === '/' && activePath === '/') ? 'active' : '';
+---
+
+<nav class="flex items-center justify-between px-12 py-4 border-b border-[var(--border)] sticky top-0 bg-[rgba(14,15,17,0.92)] backdrop-blur-md z-10">
+  <a href="/" class="flex items-baseline gap-2.5 no-underline">
+    <span class="font-serif text-base font-semibold text-[var(--text)] tracking-tight">GL·Cloud</span>
+    <span class="text-[10px] text-[var(--accent)] border border-[var(--accent)] px-1.5 py-[1px] rounded-sm tracking-wider">M2 · 2025</span>
+  </a>
+  <div class="flex gap-7">
+    <a href="/cours" class={`text-[12px] tracking-wide transition-colors duration-150 text-[var(--muted)] hover:text-[var(--text)] ${isActive('/cours')}`}>Cours</a>
+    <a href="/tp" class={`text-[12px] tracking-wide transition-colors duration-150 text-[var(--muted)] hover:text-[var(--text)] ${isActive('/tp')}`}>TP</a>
+    <a href="/projets" class={`text-[12px] tracking-wide transition-colors duration-150 text-[var(--muted)] hover:text-[var(--text)] ${isActive('/projets')}`}>Projets</a>
+    <a href="/contributions" class={`text-[12px] tracking-wide transition-colors duration-150 text-[var(--muted)] hover:text-[var(--text)] ${isActive('/contributions')}`}>Contributions</a>
+  </div>
+  <div class="flex items-center gap-3.5">
+    <a href="/contribuer" class="bg-transparent border border-[var(--border-2)] text-[var(--text)] px-3.5 py-1.5 rounded-sm font-mono text-[11px] cursor-pointer tracking-wider transition-colors duration-150 hover:border-[var(--accent)] hover:text-[var(--accent)] no-underline">↗ Contribuer</a>
+  </div>
+</nav>
+
+<style>
+  .active {
+    color: var(--accent) !important;
+  }
+</style>

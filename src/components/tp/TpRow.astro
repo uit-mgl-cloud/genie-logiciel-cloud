@@ -1,0 +1,19 @@
+---
+import TpStatusBadge from './TpStatusBadge.astro';
+
+interface Props {
+  slug: string;
+  numero: number;
+  titre: string;
+  module: number;
+  statut: 'ouvert' | 'a-venir' | 'termine';
+  isFirst?: boolean;
+}
+const { slug, numero, titre, module, statut, isFirst } = Astro.props;
+---
+<a href={`/tp/${slug}`} class={`flex items-center px-12 py-4 border-b border-[var(--border)] gap-5 cursor-pointer transition-colors duration-150 no-underline hover:bg-[var(--bg-2)] ${isFirst ? 'border-t' : ''}`}>
+  <span class="text-[10px] text-[var(--hint)] w-7 shrink-0 tracking-[0.08em]">TP·{numero.toString().padStart(2, '0')}</span>
+  <span class="flex-1 text-[13px] text-[var(--text)]">{titre}</span>
+  <span class="text-[10px] text-[var(--muted)] w-[140px] shrink-0">Module {module.toString().padStart(2, '0')}</span>
+  <TpStatusBadge statut={statut} />
+</a>

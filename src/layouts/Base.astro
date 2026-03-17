@@ -1,0 +1,41 @@
+---
+import '../styles/global.css';
+import '../styles/prose.css';
+import '../styles/syntax.css';
+import Navbar from '../components/nav/Navbar.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Plateforme collaborative M2 GL Cloud" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} | GL·Cloud</title>
+  </head>
+  <body class="bg-[var(--bg)] text-[var(--text)] font-mono text-[13px] leading-relaxed flex flex-col min-h-screen">
+    <Navbar />
+    <main class="flex-grow">
+      <slot />
+    </main>
+    <footer class="px-12 py-7 border-t border-[var(--border)] flex items-center justify-between mt-auto">
+      <div class="text-[11px] text-[var(--hint)]">
+        Génie Logiciel pour le Cloud · M2 Informatique · <span class="text-[var(--accent)]">Open Source</span> · GitHub
+      </div>
+      <div class="flex gap-5">
+        <a class="text-[11px] text-[var(--hint)] no-underline hover:text-[var(--muted)]" href="#">GitHub →</a>
+        <a class="text-[11px] text-[var(--hint)] no-underline hover:text-[var(--muted)]" href="/contribuer">Guide contribution →</a>
+        <a class="text-[11px] text-[var(--hint)] no-underline hover:text-[var(--muted)]" href="#">Discussions →</a>
+      </div>
+    </footer>
+  </body>
+</html>

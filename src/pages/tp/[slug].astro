@@ -1,0 +1,35 @@
+---
+import TpPage from "../../layouts/TpPage.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const tps = await getCollection("tp");
+  return tps.map((entry) => ({
+    params: {
+      slug: entry.id
+        .split("/")
+        .pop()
+        ?.replace(/\.mdx?$/, ""),
+    },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<TpPage
+  title={entry.data.titre}
+  description={entry.data.description}
+  numero={entry.data.numero}
+  module={entry.data.module}
+  difficulte={entry.data.difficulte}
+  duree={entry.data.duree_estimee}
+  statut={entry.data.statut}
+  outils={entry.data.outils}
+  prerequis={entry.data.prerequis}
+  date_ouverture={entry.data.date_ouverture}
+>
+  <Content />
+</TpPage>

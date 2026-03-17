@@ -1,0 +1,34 @@
+---
+import IndexPage from '../../../layouts/IndexPage.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const cours = await getCollection('cours');
+  const modules = [...new Set(cours.map(c => c.data.module))];
+  return modules.map(mod => ({
+    params: { module: `module-${mod.toString().padStart(2, '0')}` },
+    props: { 
+      mod, 
+      seances: cours.filter(c => c.data.module === mod).sort((a,b) => a.data.seance - b.data.seance) 
+    }
+  }));
+}
+
+const { mod, seances } = Astro.props;
+---
+<IndexPage 
+  title={`Module ${mod}`}
+  description="Liste complète des séances composant ce module."
+  headerLabel="SÉANCES DU MODULE"
+  headerCount={`${seances.length} séances`}
+>
+  <div class="border-b border-[var(--border)] border-t-0">
+    {seances.map((s) => (
+      <a href={`/cours/module-${mod.toString().padStart(2, '0')}/seance-${s.data.seance}`} class="block px-12 py-5 border-b border-[var(--border)] transition-colors hover:bg-[var(--bg-2)] no-underline">
+        <span class="text-[10px] text-[var(--accent)] tracking-[0.1em] mb-1.5 block uppercase">S{s.data.seance} · {s.data.duree}</span>
+        <span class="text-[14px] text-[var(--text)] font-semibold">{s.data.titre}</span>
+        <p class="text-[12px] text-[var(--muted)] mt-2 line-clamp-2">{s.data.description}</p>
+      </a>
+    ))}
+  </div>
+</IndexPage>

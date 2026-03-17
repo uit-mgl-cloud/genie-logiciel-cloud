@@ -1,0 +1,47 @@
+---
+import LecturePage from "../../../layouts/LecturePage.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const cours = await getCollection("cours");
+  return cours.map((entry) => ({
+    params: {
+      module: `module-${entry.data.module.toString().padStart(2, "0")}`,
+      seance: `seance-${entry.data.seance.toString()}`,
+    },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+
+let tpAssocieObj;
+if (entry.data.tp_associe) {
+  const allTps = await getCollection("tp");
+  const foundTp = allTps.find((t) => t.id === entry.data.tp_associe);
+  if (foundTp) {
+    tpAssocieObj = {
+      label: foundTp.data.titre,
+      url: `/tp/${foundTp.id
+        .split("/")
+        .pop()
+        ?.replace(/\.mdx?$/, "")}`,
+    };
+  }
+}
+---
+
+<LecturePage
+  title={entry.data.titre}
+  description={entry.data.description}
+  module={entry.data.module}
+  seance={entry.data.seance}
+  duree={entry.data.duree}
+  niveau={entry.data.niveau}
+  date={entry.data.date}
+  tpAssocie={tpAssocieObj}
+  headings={headings}
+>
+  <Content />
+</LecturePage>

@@ -1,0 +1,45 @@
+---
+import Base from './Base.astro';
+import AuthorTag from '../components/contributions/AuthorTag.astro';
+import GiscusComments from '../components/content/GiscusComments.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  type: string;
+  auteur: string;
+  date: Date;
+  module?: number;
+  tp_reference?: string;
+  outils?: string[];
+}
+
+const { title, description, type, auteur, date, module, tp_reference, outils } = Astro.props;
+
+const dateStr = new Intl.DateTimeFormat('fr-FR', {
+  year: 'numeric', month: 'long', day: 'numeric',
+}).format(date);
+---
+
+<Base title={title} description={description}>
+  <main class="max-w-[720px] mx-auto px-12 py-16">
+    <div class="flex items-center gap-4 mb-6">
+      <AuthorTag username={auteur} />
+      <span class="text-[9px] text-[var(--hint)] tracking-[0.08em] px-2 py-0.5 border border-[var(--border)] rounded-sm uppercase">
+        {type.replace(/-/g, ' ')}
+      </span>
+      <span class="text-[10px] text-[var(--hint)] ml-auto">{dateStr}</span>
+    </div>
+
+    <h1 class="font-serif text-[42px] font-light leading-tight tracking-tight mb-4 text-[var(--text)]" set:html={title} />
+    <p class="text-[14px] text-[var(--muted)] leading-relaxed mb-10 pb-8 border-b border-[var(--border)]">
+      {description}
+    </p>
+
+    <div class="prose mb-16">
+      <slot />
+    </div>
+
+    <GiscusComments />
+  </main>
+</Base>
