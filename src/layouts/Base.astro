@@ -7,9 +7,10 @@ import Navbar from '../components/nav/Navbar.astro';
 interface Props {
   title: string;
   description?: string;
+  hideNavbar?: boolean;
 }
 
-const { title, description = "Plateforme collaborative M2 GL Cloud" } = Astro.props;
+const { title, description = "Plateforme collaborative M2 GL Cloud", hideNavbar = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -23,7 +24,7 @@ const { title, description = "Plateforme collaborative M2 GL Cloud" } = Astro.pr
     <title>{title} | GL·Cloud</title>
   </head>
   <body class="bg-[var(--bg)] text-[var(--text)] font-mono text-[13px] leading-relaxed flex flex-col min-h-screen">
-    <Navbar />
+    {!hideNavbar && <Navbar />}
     <main class="flex-grow">
       <slot />
     </main>

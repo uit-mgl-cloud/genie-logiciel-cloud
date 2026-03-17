@@ -1,0 +1,61 @@
+
+> build
+> astro build && npx pagefind --site dist
+
+[2m14:31:32[22m [34m[content][39m Syncing content
+[2m14:31:32[22m [34m[content][39m Synced content
+[2m14:31:32[22m [34m[types][39m Generated [2m2.49s[22m
+[2m14:31:32[22m [34m[build][39m output: [34m"static"[39m
+[2m14:31:32[22m [34m[build][39m mode: [34m"static"[39m
+[2m14:31:32[22m [34m[build][39m directory: [34mC:\dev\web\genie-logiciel-cloud\dist\[39m
+[2m14:31:32[22m [34m[build][39m Collecting build info...
+[2m14:31:32[22m [34m[build][39m [32mΓ£ô Completed in 2.59s.[39m
+[2m14:31:32[22m [34m[build][39m Building static entrypoints...
+[33m[1m14:31:37[22m [WARN] [vite][39m [33m"matchHostname", "matchPathname", "matchPort" and "matchProtocol" are imported from external module "@astrojs/internal-helpers/remote" but never used in "node_modules/astro/dist/assets/utils/index.js".[39m
+[2m14:31:37[22m [34m[vite][39m [32mΓ£ô built in 5.11s[39m
+[2m14:31:37[22m [34m[vite][39m [32mΓ£ô built in 40ms[39m
+[2m14:31:37[22m [34m[build][39m Rearranging server assets...
+
+[42m[30m generating static routes [39m[49m
+[2m14:31:38[22m   [34mΓö£ΓöÇ[39m [2m/contribuer/index.html[22m [2m(+97ms)[22m 
+[2m14:31:38[22m   [34mΓö£ΓöÇ[39m [2m/contributions/etude-de-cas/a-mansouri-migration/index.html[22m [2m(+30ms)[22m 
+[2m14:31:38[22m   [34mΓö£ΓöÇ[39m [2m/contributions/index.html[22m [2m(+39ms)[22m 
+[2m14:31:38[22m   [34mΓö£ΓöÇ[39m [2m/cours/module-01/seance-1/index.html[22m [2m(+37ms)[22m 
+[2m14:31:38[22m   [34mΓö£ΓöÇ[39m [2m/cours/module-01/index.html[22m [2m(+23ms)[22m 
+[2m14:31:38[22m   [34mΓö£ΓöÇ[39m [2m/cours/index.html[22m [2m(+45ms)[22m 
+[2m14:31:38[22m   [34mΓö£ΓöÇ[39m [2m/projets/projet-microservices/index.html[22m [2m(+24ms)[22m 
+[2m14:31:38[22m   [34mΓö£ΓöÇ[39m [2m/projets/index.html[22m [2m(+33ms)[22m 
+[2m14:31:38[22m   [34mΓö£ΓöÇ[39m [2m/recherche/index.html[22m [2m(+31ms)[22m 
+[2m14:31:38[22m   [34mΓö£ΓöÇ[39m [2m/tp/tp-01-vps-deploy/index.html[22m [2m(+22ms)[22m 
+[2m14:31:38[22m   [34mΓö£ΓöÇ[39m [2m/tp/index.html[22m [2m(+42ms)[22m 
+[2m14:31:38[22m   [34mΓö£ΓöÇ[39m [2m/index.html[22m [2m(+32ms)[22m 
+[2m14:31:38[22m [32mΓ£ô Completed in 663ms.
+[39m
+[2m14:31:38[22m [34m[build][39m [32mΓ£ô Completed in 6.12s.[39m
+[2m14:31:38[22m [34m[build][39m 12 page(s) built in [1m8.78s[22m
+[2m14:31:38[22m [34m[build][39m [1mComplete![22m
+
+Running Pagefind v1.4.0 (Extended)
+Running from: "C:\\dev\\web\\genie-logiciel-cloud"
+Source:       "dist"
+Output:       "dist\\pagefind"
+
+[Walking source directory]
+Found 12 files matching **/*.{html}
+
+[Parsing files]
+Did not find a data-pagefind-body element on the site.
+Γå│ Indexing all <body> elements on the site.
+
+[Reading languages]
+Discovered 1 language: fr
+
+[Building search indexes]
+Total: 
+  Indexed 1 language
+  Indexed 12 pages
+  Indexed 394 words
+  Indexed 0 filters
+  Indexed 0 sorts
+
+Finished in 0.337 seconds
