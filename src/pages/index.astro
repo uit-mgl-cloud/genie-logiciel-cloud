@@ -71,7 +71,7 @@ const featuredContribs = contributions.slice(0, 4);
   <div class="border-b border-[var(--border)] border-t-0">
     {featuredTps.map((tp, i) => (
       <TpRow 
-        slug={tp.id} 
+        slug={tp.id.split('/').pop()?.replace(/\.mdx?$/, '') || ''} 
         numero={tp.data.numero} 
         titre={tp.data.titre} 
         module={tp.data.module} 
@@ -91,7 +91,7 @@ const featuredContribs = contributions.slice(0, 4);
   <div class="grid grid-cols-1 md:grid-cols-2 border-l border-[var(--border)]">
     {featuredContribs.map((c) => (
       <ContribCard 
-        slug={c.id}
+        slug={c.id.split('/').pop()?.replace(/\.mdx?$/, '') || ''}
         type={c.data.type}
         titre={c.data.titre}
         auteur={c.data.auteur}

@@ -15,7 +15,7 @@ tps.sort((a, b) => a.data.numero - b.data.numero);
   <div class="border-b border-[var(--border)] border-t-0">
     {tps.map((tp) => (
       <TpRow 
-        slug={tp.id} 
+        slug={tp.id.split('/').pop()?.replace(/\.mdx?$/, '') || ''} 
         numero={tp.data.numero} 
         titre={tp.data.titre} 
         module={tp.data.module} 

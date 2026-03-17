@@ -15,7 +15,7 @@ contributions.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 border-l border-[var(--border)]">
     {contributions.map((c) => (
       <ContribCard 
-        slug={c.id}
+        slug={c.id.split('/').pop()?.replace(/\.mdx?$/, '') || ''}
         type={c.data.type}
         titre={c.data.titre}
         auteur={c.data.auteur}

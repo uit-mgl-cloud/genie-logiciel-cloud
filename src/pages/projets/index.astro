@@ -12,12 +12,22 @@ const projets = await getCollection('projets');
 >
   <div class="border-b border-[var(--border)] border-t-0">
     {projets.map((p) => (
-      <a href={`/projets/${p.id.split('/').pop().replace(/\.mdx?$/, '')}`} class="block px-12 py-5 border-b border-[var(--border)] transition-colors hover:bg-[var(--bg-2)] no-underline">
-        <span class="text-[14px] text-[var(--text)] font-medium mb-1.5 block">{p.data.titre}</span>
-        <p class="text-[12px] text-[var(--muted)] line-clamp-2 mb-2">{p.data.description}</p>
-        <div class="flex gap-4">
-          <span class="text-[10px] text-[var(--hint)]">Modules : {p.data.modules.join(', ')}</span>
-          <span class="text-[10px] text-[var(--hint)]">Équipe : max {p.data.equipe} personnes</span>
+      <a href={`/projets/${p.id.split('/').pop()?.replace(/\.mdx?$/, '') || ''}`} class="flex flex-col md:flex-row md:items-center px-12 py-6 border-b border-[var(--border)] gap-6 cursor-pointer transition-colors duration-150 no-underline hover:bg-[var(--bg-2)]">
+        <div class="flex-1">
+          <span class="font-serif text-[18px] font-light text-[var(--text)] tracking-tight mb-2 block">{p.data.titre}</span>
+          <p class="text-[12px] text-[var(--muted)] leading-relaxed line-clamp-2 mb-3 max-w-[600px]">{p.data.description}</p>
+          <div class="flex flex-wrap gap-x-6 gap-y-2">
+            <span class="text-[10px] text-[var(--hint)] tracking-[0.06em]">
+              <span class="text-[var(--text)]">Modules</span> {p.data.modules.join(', ')}
+            </span>
+            <span class="text-[10px] text-[var(--hint)] tracking-[0.06em]">
+              <span class="text-[var(--text)]">Équipe</span> {p.data.equipe} max
+            </span>
+          </div>
+        </div>
+        <div class="hidden md:flex flex-col shrink-0 text-right gap-1.5 w-[140px]">
+          <span class="text-[9px] text-[var(--accent)] tracking-[0.1em] px-2 py-[2px] border border-[rgba(200,240,128,0.25)] bg-[rgba(200,240,128,0.06)] rounded-sm inline-block self-end">LIVRABLE</span>
+          <span class="text-[11px] text-[var(--text)]">{p.data.livrable}</span>
         </div>
       </a>
     ))}
