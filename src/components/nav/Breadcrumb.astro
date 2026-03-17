@@ -17,6 +17,5 @@ const { context, module, seance, title } = Astro.props;
       <span>Module {module.toString().padStart(2, '0')}</span>
       <span class="text-[var(--border-2)]">/</span>
     </>
-  )}
-  <span class="text-[var(--muted)] truncate max-w-[300px]" set:html={title} />
+  <span class="text-[var(--muted)] truncate max-w-[120px] md:max-w-[300px]" set:html={title} />
 </div>

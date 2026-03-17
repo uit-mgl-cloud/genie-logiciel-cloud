@@ -24,7 +24,7 @@ const { mod, seances } = Astro.props;
 >
   <div class="border-b border-[var(--border)] border-t-0">
     {seances.map((s) => (
-      <a href={`/cours/module-${mod.toString().padStart(2, '0')}/seance-${s.data.seance}`} class="block px-12 py-5 border-b border-[var(--border)] transition-colors hover:bg-[var(--bg-2)] no-underline">
+      <a href={`/cours/module-${mod.toString().padStart(2, '0')}/seance-${s.data.seance}`} class="block px-6 md:px-12 lg:px-20 xl:px-32 py-5 border-b border-[var(--border)] transition-colors hover:bg-[var(--bg-2)] no-underline">
         <span class="text-[10px] text-[var(--accent)] tracking-[0.1em] mb-1.5 block uppercase">S{s.data.seance} · {s.data.duree}</span>
         <span class="text-[14px] text-[var(--text)] font-semibold">{s.data.titre}</span>
         <p class="text-[12px] text-[var(--muted)] mt-2 line-clamp-2">{s.data.description}</p>

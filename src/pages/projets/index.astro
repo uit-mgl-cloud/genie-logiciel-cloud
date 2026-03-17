@@ -12,7 +12,7 @@ const projets = await getCollection('projets');
 >
   <div class="border-b border-[var(--border)] border-t-0">
     {projets.map((p) => (
-      <a href={`/projets/${p.id.split('/').pop()?.replace(/\.mdx?$/, '') || ''}`} class="flex flex-col md:flex-row md:items-center px-12 py-6 border-b border-[var(--border)] gap-6 cursor-pointer transition-colors duration-150 no-underline hover:bg-[var(--bg-2)]">
+      <a href={`/projets/${p.id.split('/').pop()?.replace(/\.mdx?$/, '') || ''}`} class="flex flex-col md:flex-row md:items-center px-6 md:px-12 lg:px-20 xl:px-32 py-6 border-b border-[var(--border)] gap-6 cursor-pointer transition-colors duration-150 no-underline hover:bg-[var(--bg-2)]">
         <div class="flex-1">
           <span class="font-serif text-[18px] font-light text-[var(--text)] tracking-tight mb-2 block">{p.data.titre}</span>
           <p class="text-[12px] text-[var(--muted)] leading-relaxed line-clamp-2 mb-3 max-w-[600px]">{p.data.description}</p>
@@ -32,7 +32,7 @@ const projets = await getCollection('projets');
       </a>
     ))}
     {projets.length === 0 && (
-      <div class="px-12 py-8 text-[12px] text-[var(--muted)]">Aucun projet pour le moment.</div>
+      <div class="px-6 md:px-12 lg:px-20 xl:px-32 py-8 text-[12px] text-[var(--muted)]">Aucun projet pour le moment.</div>
     )}
   </div>
 </IndexPage>

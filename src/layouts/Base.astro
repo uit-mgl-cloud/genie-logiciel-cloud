@@ -28,11 +28,11 @@ const { title, description = "Plateforme collaborative M2 GL Cloud", hideNavbar 
     <main class="flex-grow">
       <slot />
     </main>
-    <footer class="px-12 py-7 border-t border-[var(--border)] flex items-center justify-between mt-auto">
-      <div class="text-[11px] text-[var(--hint)]">
+    <footer class="px-6 md:px-12 lg:px-20 xl:px-32 py-7 border-t border-[var(--border)] flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0 mt-auto">
+      <div class="text-[11px] text-[var(--hint)] text-center md:text-left">
         Génie Logiciel pour le Cloud · M2 Informatique · <span class="text-[var(--accent)]">Open Source</span> · GitHub
       </div>
-      <div class="flex gap-5">
+      <div class="flex gap-5 justify-center">
         <a class="text-[11px] text-[var(--hint)] no-underline hover:text-[var(--muted)]" href="#">GitHub →</a>
         <a class="text-[11px] text-[var(--hint)] no-underline hover:text-[var(--muted)]" href="/contribuer">Guide contribution →</a>
         <a class="text-[11px] text-[var(--hint)] no-underline hover:text-[var(--muted)]" href="#">Discussions →</a>
