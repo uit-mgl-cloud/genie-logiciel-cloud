@@ -6,15 +6,20 @@ interface Props {
 const { type, title } = Astro.props;
 
 const variants = {
-  note: 'border-[var(--accent)] bg-[rgba(200,240,128,0.04)] text-[var(--accent)]',
-  warning: 'border-amber-500 bg-amber-500/5 text-amber-500',
-  tip: 'border-[var(--accent-2)] bg-[rgba(128,212,240,0.04)] text-[var(--accent-2)]'
+  note: 'bg-[rgba(110,231,247,0.05)] border-[rgba(110,231,247,0.15)] border-l-[var(--electric)] text-[var(--electric)]',
+  warning: 'bg-[rgba(251,113,133,0.05)] border-[rgba(251,113,133,0.15)] border-l-[var(--rose)] text-[var(--rose)]',
+  tip: 'bg-[rgba(163,230,53,0.05)] border-[rgba(163,230,53,0.15)] border-l-[var(--lime)] text-[var(--lime)]'
 };
 const label = title || type.toUpperCase();
 ---
-<div class={`border-l-2 py-3.5 px-4.5 my-5 rounded-r-sm ${variants[type]}`}>
-  <div class="text-[9px] tracking-[0.1em] mb-1.5 uppercase font-medium">{label}</div>
-  <div class="text-[12px] text-[var(--muted)] leading-relaxed m-0 [&>p]:!m-0">
+<div class={`border border-l-4 py-4 px-5 my-6 rounded-r-xl rounded-l-sm backdrop-blur-sm ${variants[type]}`}>
+  <div class="text-[9px] tracking-[0.12em] mb-2 uppercase font-bold flex items-center gap-2">
+    {type === 'note' && <span class="w-1.5 h-1.5 rounded-full bg-[var(--electric)] shadow-[0_0_8px_rgba(110,231,247,0.5)]"></span>}
+    {type === 'warning' && <span class="w-1.5 h-1.5 rounded-full bg-[var(--rose)] shadow-[0_0_8px_rgba(251,113,133,0.5)]"></span>}
+    {type === 'tip' && <span class="w-1.5 h-1.5 rounded-full bg-[var(--lime)] shadow-[0_0_8px_rgba(163,230,53,0.5)]"></span>}
+    {label}
+  </div>
+  <div class="text-[13px] text-[rgba(241,245,249,0.8)] leading-[1.8] m-0 [&>p]:!m-0 selection:bg-white/20">
     <slot />
   </div>
 </div>

@@ -21,16 +21,27 @@ try {
 } catch (e) {
   timeAgo = date.toLocaleDateString();
 }
+// avatar initials
+const initials = auteur.substring(0, 2).toUpperCase();
 ---
-<a href={`/contributions/${type}/${slug}`} class="block border-r border-b border-[var(--border)] p-5.5 px-6.5 cursor-pointer transition-colors duration-150 no-underline hover:bg-[var(--bg-2)]">
-  <div class="flex items-center gap-2 mb-3">
-    <AuthorTag username={auteur} />
-    <span class="text-[9px] text-[var(--hint)] ml-auto tracking-[0.08em] px-1.5 py-[1px] border border-[var(--border)] rounded-sm uppercase">
+<a href={`/contributions/${type}/${slug}`} class="block bg-[var(--glass)] border border-[var(--glass-border)] rounded-2xl p-5.5 cursor-pointer transition-all duration-200 relative overflow-hidden group hover:border-[rgba(167,139,250,0.25)] hover:bg-[rgba(167,139,250,0.04)] hover:-translate-y-0.5 no-underline">
+  <div class="flex items-center gap-2.5 mb-3.5">
+    <div class="w-8 h-8 rounded-[10px] bg-gradient-to-br from-[var(--electric)] to-[var(--violet)] flex items-center justify-center text-[11px] font-bold text-[#080B12] font-syne shrink-0">{initials}</div>
+    <div class="flex-1">
+      <div class="text-[12px] text-[var(--text)] mb-0.5">{auteur}</div>
+      <div class="text-[10px] text-[var(--muted)]">{timeAgo}</div>
+    </div>
+    <span class={`text-[9px] tracking-[0.08em] px-2.5 py-[3px] rounded-md uppercase ${
+      type === 'etude-de-cas' ? 'bg-[rgba(251,113,133,0.1)] border border-[rgba(251,113,133,0.25)] text-[var(--rose)]' : 
+      type === 'solution-tp' ? 'bg-[rgba(163,230,53,0.1)] border border-[rgba(163,230,53,0.25)] text-[var(--lime)]' : 
+      type === 'ressource' ? 'bg-[rgba(110,231,247,0.1)] border border-[rgba(110,231,247,0.25)] text-[var(--electric)]' : 
+      'bg-[rgba(167,139,250,0.1)] border border-[rgba(167,139,250,0.25)] text-[var(--violet)]'
+    }`}>
       {type.replace(/-/g, ' ')}
     </span>
   </div>
-  <div class="text-[13px] text-[var(--text)] leading-snug mb-1.5" set:html={titre} />
-  <div class="text-[10px] text-[var(--hint)]">
-    {module ? `Module ${module.toString().padStart(2, '0')} · ` : ''}{timeAgo}
+  <div class="font-syne text-[14px] font-bold text-[var(--text)] leading-[1.35] mb-2" set:html={titre} />
+  <div class="flex flex-wrap gap-1.5">
+    {module && <span class="text-[9px] tracking-[0.08em] font-medium px-2.5 py-0.5 rounded-full border border-[var(--glass-border)] text-[var(--muted)]">TP/MODULE {module}</span>}
   </div>
 </a>

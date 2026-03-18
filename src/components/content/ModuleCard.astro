@@ -10,20 +10,23 @@ interface Props {
 }
 const { numero, titre, description, tags, statut, seances, featured } = Astro.props;
 ---
-<a href={`/cours/module-${numero.toString().padStart(2, '0')}`} class={`block border-r border-b border-[var(--border)] p-7 pb-6 cursor-pointer transition-colors duration-150 relative no-underline group hover:bg-[var(--bg-2)] ${featured ? 'bg-[var(--bg-2)] border-[var(--border-2)]' : ''}`}>
-  <div class={`text-[10px] tracking-[0.1em] mb-3.5 ${featured ? 'text-[var(--accent)]' : 'text-[var(--hint)]'}`}>
+<a href={`/cours/module-${numero.toString().padStart(2, '0')}`} class={`block bg-[var(--glass)] border border-[var(--glass-border)] rounded-2xl p-6 cursor-pointer transition-all duration-200 relative overflow-hidden no-underline group hover:border-[rgba(110,231,247,0.25)] hover:bg-[rgba(110,231,247,0.04)] hover:-translate-y-0.5 after:content-[''] after:absolute after:inset-0 after:bg-gradient-to-br after:from-[rgba(110,231,247,0.05)] after:to-transparent after:opacity-0 after:transition-opacity after:duration-200 hover:after:opacity-100 ${featured ? 'border-[rgba(110,231,247,0.2)] bg-gradient-to-br from-[rgba(110,231,247,0.06)] to-[rgba(167,139,250,0.04)]' : ''}`}>
+  <div class={`text-[10px] tracking-[0.1em] font-medium flex items-center gap-1.5 mb-3.5 ${featured ? 'text-[var(--electric)]' : 'text-[var(--electric)]'}`}>
     {numero.toString().padStart(2, '0')}
+    <span class="h-px flex-1 bg-gradient-to-r from-[rgba(110,231,247,0.4)] to-transparent"></span>
   </div>
-  <div class="font-serif text-[17px] font-light leading-tight text-[var(--text)] mb-2 tracking-tight" set:html={titre} />
-  <div class="text-[11px] text-[var(--muted)] leading-relaxed mb-4.5">
+  <div class="font-syne font-bold text-[16px] leading-[1.25] text-[var(--text)] mb-2.5 tracking-[-0.01em]" set:html={titre} />
+  <div class="text-[11px] text-[var(--muted)] leading-[1.7] mb-4">
     {description}
   </div>
-  <div class="flex flex-wrap gap-1.5">
-    {statut === 'en-cours' && <span class="text-[9px] tracking-[0.08em] px-2 py-0.5 rounded-sm border border-[rgba(200,240,128,0.3)] text-[var(--accent)] bg-[rgba(200,240,128,0.06)]">En cours</span>}
-    <span class="text-[9px] tracking-[0.08em] px-2 py-0.5 rounded-sm border border-[var(--border-2)] text-[var(--hint)] bg-transparent">{seances} séances</span>
-    {tags.map(tag => (
-      <span class="text-[9px] tracking-[0.08em] px-2 py-0.5 rounded-sm border border-[var(--border-2)] text-[var(--hint)] bg-transparent">{tag}</span>
-    ))}
+  <div class="flex items-center justify-between">
+    <div class="flex flex-wrap gap-1.5">
+      {statut === 'en-cours' && <span class="text-[9px] tracking-[0.08em] font-medium px-2.5 py-0.5 rounded-full border border-[rgba(163,230,53,0.3)] text-[var(--lime)] bg-[rgba(163,230,53,0.12)]">En cours</span>}
+      <span class="text-[9px] tracking-[0.08em] font-medium px-2.5 py-0.5 rounded-full border border-[var(--glass-border)] text-[var(--muted)] bg-transparent transition-colors duration-150 group-hover:border-[rgba(110,231,247,0.2)] group-hover:text-[rgba(110,231,247,0.8)]">{seances} séances</span>
+      {tags.map(tag => (
+        <span class="text-[9px] tracking-[0.08em] font-medium px-2.5 py-0.5 rounded-full border border-[var(--glass-border)] text-[var(--muted)] bg-transparent transition-colors duration-150 group-hover:border-[rgba(110,231,247,0.2)] group-hover:text-[rgba(110,231,247,0.8)]">{tag}</span>
+      ))}
+    </div>
+    <span class="text-[16px] text-[var(--muted)] -rotate-45 transition-all duration-200 group-hover:rotate-0 group-hover:text-[var(--electric)]">↗</span>
   </div>
-  <span class="absolute top-6 right-6 text-[var(--hint)] text-[14px] opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
 </a>

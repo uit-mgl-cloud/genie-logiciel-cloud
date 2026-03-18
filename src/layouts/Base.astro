@@ -24,18 +24,25 @@ const { title, description = "Plateforme collaborative M2 GL Cloud", hideNavbar 
     <title>{title} | GL·Cloud</title>
   </head>
   <body class="bg-[var(--bg)] text-[var(--text)] font-mono text-[13px] leading-relaxed flex flex-col min-h-screen">
-    {!hideNavbar && <Navbar />}
-    <main class="flex-grow">
-      <slot />
-    </main>
-    <footer class="px-6 md:px-12 lg:px-20 xl:px-32 py-7 border-t border-[var(--border)] flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0 mt-auto">
-      <div class="text-[11px] text-[var(--hint)] text-center md:text-left">
-        Génie Logiciel pour le Cloud · M2 Informatique · <span class="text-[var(--accent)]">Open Source</span> · GitHub
+    <div class={Astro.url.pathname.includes('/cours/') ? "bg-mesh-lecture" : "bg-mesh"}></div>
+    <div class="bg-noise"></div>
+    <div class="content relative z-10 flex-grow flex flex-col">
+      {!hideNavbar && <Navbar />}
+      <main class="flex-grow w-full">
+        <slot />
+      </main>
+    </div>
+    <footer class="px-6 md:px-12 lg:px-20 xl:px-32 py-8 mt-auto border-t border-[var(--glass-border)] w-full max-w-[1200px] mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-0 z-20 relative">
+      <div>
+        <div class="font-syne font-extrabold text-[13px] bg-clip-text text-transparent bg-gradient-to-r from-[var(--electric)] to-[var(--violet)]">GL·Cloud</div>
+        <div class="text-[11px] text-[var(--muted)] mt-1 tracking-wide">
+          M2 Informatique · Open Source · Hébergé sur GitHub Pages
+        </div>
       </div>
-      <div class="flex gap-5 justify-center">
-        <a class="text-[11px] text-[var(--hint)] no-underline hover:text-[var(--muted)]" href="#">GitHub →</a>
-        <a class="text-[11px] text-[var(--hint)] no-underline hover:text-[var(--muted)]" href="/contribuer">Guide contribution →</a>
-        <a class="text-[11px] text-[var(--hint)] no-underline hover:text-[var(--muted)]" href="#">Discussions →</a>
+      <div class="flex gap-4">
+        <a class="text-[11px] text-[var(--muted)] no-underline hover:text-[var(--electric)] transition-colors duration-200" href="#">GitHub</a>
+        <a class="text-[11px] text-[var(--muted)] no-underline hover:text-[var(--electric)] transition-colors duration-200" href="/contribuer">Contribuer</a>
+        <a class="text-[11px] text-[var(--muted)] no-underline hover:text-[var(--electric)] transition-colors duration-200" href="#">Discussions</a>
       </div>
     </footer>
   </body>

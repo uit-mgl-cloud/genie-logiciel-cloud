@@ -4,6 +4,6 @@ interface Props {
 }
 const { statut } = Astro.props;
 ---
-{statut === 'ouvert' && <span class="text-[9px] px-2 py-0.5 rounded-sm tracking-[0.06em] shrink-0 bg-[rgba(200,240,128,0.1)] text-[var(--accent)] border border-[rgba(200,240,128,0.25)] uppercase">Ouvert</span>}
-{statut === 'a-venir' && <span class="text-[9px] px-2 py-0.5 rounded-sm tracking-[0.06em] shrink-0 bg-[rgba(122,127,142,0.08)] text-[var(--hint)] border border-[var(--border)] uppercase">À venir</span>}
-{statut === 'termine' && <span class="text-[9px] px-2 py-0.5 rounded-sm tracking-[0.06em] shrink-0 bg-[rgba(122,127,142,0.08)] text-[var(--hint)] border border-[var(--border)] uppercase">Terminé</span>}
+{statut === 'ouvert' && <span class="inline-flex items-center gap-1.5 text-[9px] tracking-[0.08em] font-medium px-2.5 py-[3px] rounded-full bg-[rgba(163,230,53,0.12)] border border-[rgba(163,230,53,0.3)] text-[var(--lime)] uppercase"><span class="w-1 h-1 rounded-full bg-[var(--lime)] animate-pulse"></span>Ouvert</span>}
+{statut === 'a-venir' && <span class="inline-flex items-center gap-1.5 text-[9px] tracking-[0.08em] font-medium px-2.5 py-[3px] rounded-full bg-[rgba(100,116,139,0.12)] border border-[rgba(100,116,139,0.2)] text-[var(--muted)] uppercase">À venir</span>}
+{statut === 'termine' && <span class="inline-flex items-center gap-1.5 text-[9px] tracking-[0.08em] font-medium px-2.5 py-[3px] rounded-full bg-[rgba(100,116,139,0.12)] border border-[rgba(100,116,139,0.2)] text-[var(--muted)] uppercase">Terminé</span>}

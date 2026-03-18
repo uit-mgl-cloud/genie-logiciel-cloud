@@ -9,14 +9,14 @@ interface Props {
 const { context, module, seance, title } = Astro.props;
 ---
 
-<div class="flex items-center gap-2 text-[11px] text-[var(--hint)]">
+<div class="flex items-center gap-1.5 text-[11px] text-[var(--muted)]">
   <span class="capitalize">{context}</span>
-  <span class="text-[var(--border-2)]">/</span>
+  <span class="text-[var(--hint)]">/</span>
   {module !== undefined && (
     <>
       <span>Module {module.toString().padStart(2, '0')}</span>
-      <span class="text-[var(--border-2)]">/</span>
+      <span class="text-[var(--hint)]">/</span>
     </>
   )}
-  <span class="text-[var(--muted)] truncate max-w-[120px] md:max-w-[300px]" set:html={title} />
+  <span class="text-[var(--text)] truncate max-w-[120px] md:max-w-[300px]" set:html={title} />
 </div>

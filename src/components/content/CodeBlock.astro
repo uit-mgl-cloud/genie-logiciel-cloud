@@ -6,12 +6,17 @@ interface Props {
 }
 const { lang } = Astro.props;
 ---
-<div class="bg-[var(--bg-2)] border border-[var(--border)] rounded-sm p-4.5 my-5 overflow-x-auto relative group">
-  <div class="flex items-center justify-between mb-3 pb-2.5 border-b border-[var(--border)]">
-    <span class="text-[9px] tracking-[0.1em] text-[var(--accent)] px-1.5 py-[1px] border border-[rgba(200,240,128,0.3)] rounded-sm uppercase">{lang}</span>
-    <button class="text-[9px] text-[var(--hint)] cursor-pointer tracking-[0.06em] bg-transparent border-none uppercase hover:text-[var(--text)] transition-colors copy-btn">copier</button>
+<div class="bg-[rgba(0,0,0,0.4)] border border-[var(--glass-border)] rounded-[14px] my-6 overflow-hidden relative group">
+  <div class="flex items-center justify-between px-[18px] py-[11px] border-b border-[var(--glass-border)] bg-[rgba(255,255,255,0.02)]">
+    <span class="text-[9px] tracking-[0.1em] font-medium px-2.5 py-0.5 rounded-md bg-[rgba(110,231,247,0.1)] border border-[rgba(110,231,247,0.2)] text-[var(--electric)] uppercase">{lang}</span>
+    <div class="flex gap-1.5 items-center">
+      <button class="text-[9px] text-[var(--muted)] cursor-pointer tracking-[0.06em] bg-transparent border-none uppercase hover:text-[var(--text)] transition-colors copy-btn mr-2">copier</button>
+      <div class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></div>
+      <div class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></div>
+      <div class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></div>
+    </div>
   </div>
-  <div class="code-content text-[12px] leading-relaxed text-[var(--text)] whitespace-pre overflow-x-auto">
+  <div class="code-content text-[12px] leading-[1.8] font-mono text-[var(--text)] whitespace-pre overflow-x-auto p-5">
     <slot />
   </div>
 </div>

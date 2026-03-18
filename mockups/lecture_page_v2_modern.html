@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --electric:#6EE7F7;--violet:#A78BFA;--lime:#A3E635;--rose:#FB7185;
+  --bg:#080B12;--glass:rgba(255,255,255,0.04);--glass-border:rgba(255,255,255,0.08);
+  --text:#F1F5F9;--muted:#64748B;--hint:#334155;
+  --syne:'Syne',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;overflow-x:hidden}
+
+.bg-mesh{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 50% 40% at 0% 30%, rgba(110,231,247,0.07) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 35% at 100% 10%, rgba(167,139,250,0.07) 0%,transparent 55%);
+}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;height:56px;
+  background:rgba(8,11,18,0.75);
+  border-bottom:1px solid var(--glass-border);
+  backdrop-filter:blur(20px);
+}
+.nav-logo{
+  font-family:var(--syne);font-weight:800;font-size:15px;
+  background:linear-gradient(135deg,var(--electric),var(--violet));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.breadcrumb{
+  display:flex;align-items:center;gap:6px;
+  font-size:11px;color:var(--muted);
+}
+.bc-sep{color:var(--hint)}
+.bc-cur{color:var(--text)}
+.nav-meta{font-size:10px;color:var(--muted)}
+
+/* 3-COL LAYOUT */
+.page-wrap{
+  display:grid;
+  grid-template-columns:240px 1fr 220px;
+  min-height:calc(100vh - 56px);
+  position:relative;z-index:2;
+}
+
+/* LEFT SIDEBAR */
+.sidebar-l{
+  border-right:1px solid var(--glass-border);
+  padding:24px 0;
+  position:sticky;top:56px;height:calc(100vh - 56px);
+  overflow-y:auto;
+}
+.sidebar-l::-webkit-scrollbar{width:3px}
+.sidebar-l::-webkit-scrollbar-track{background:transparent}
+.sidebar-l::-webkit-scrollbar-thumb{background:var(--hint);border-radius:2px}
+
+.sb-module-header{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 20px 6px;margin-bottom:4px;
+}
+.sb-module-num{
+  font-size:9px;letter-spacing:0.12em;font-weight:500;
+  color:var(--electric);
+  background:rgba(110,231,247,0.1);
+  border:1px solid rgba(110,231,247,0.2);
+  padding:2px 7px;border-radius:4px;
+}
+.sb-module-name{font-size:10px;color:var(--muted);letter-spacing:0.06em}
+
+.sb-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 20px;cursor:pointer;text-decoration:none;
+  transition:background .12s;position:relative;
+}
+.sb-item:hover{background:var(--glass)}
+.sb-item.active{background:rgba(110,231,247,0.06)}
+.sb-item.active::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:2px;background:linear-gradient(180deg,var(--electric),var(--violet));
+  border-radius:0 2px 2px 0;
+}
+.sb-dot{
+  width:6px;height:6px;border-radius:50%;flex-shrink:0;
+  border:1px solid var(--muted);
+  transition:background .12s,border-color .12s;
+}
+.sb-item.active .sb-dot{background:var(--electric);border-color:var(--electric)}
+.sb-item:hover .sb-dot{border-color:var(--text)}
+.sb-label{font-size:11px;color:var(--muted);line-height:1.4;transition:color .12s}
+.sb-item.active .sb-label{color:var(--text)}
+.sb-item:hover .sb-label{color:var(--text)}
+.sb-sublabel{font-size:9px;color:var(--hint);letter-spacing:0.06em;margin-top:1px}
+
+.sb-divider{height:1px;background:var(--glass-border);margin:12px 16px}
+
+.sb-collapsed .sb-item:not(.active){opacity:0.5}
+.sb-module-toggle{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:6px 20px;cursor:pointer;
+  font-size:10px;letter-spacing:0.1em;color:var(--hint);
+  transition:color .12s;
+}
+.sb-module-toggle:hover{color:var(--muted)}
+
+/* MAIN CONTENT */
+.main{padding:40px 52px;max-width:720px}
+
+.content-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:9px;letter-spacing:0.14em;color:var(--electric);
+  padding:5px 12px;border-radius:6px;
+  background:rgba(110,231,247,0.08);
+  border:1px solid rgba(110,231,247,0.2);
+  margin-bottom:20px;
+}
+
+h1{
+  font-family:var(--syne);font-weight:800;font-size:38px;line-height:1.05;
+  letter-spacing:-0.03em;margin-bottom:8px;
+}
+h1 .grad{
+  background:linear-gradient(90deg,var(--text) 40%,var(--electric));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+.content-meta{
+  display:flex;flex-wrap:wrap;gap:0;
+  margin-bottom:36px;margin-top:20px;
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;
+  overflow:hidden;
+}
+.meta-item{
+  flex:1;min-width:100px;
+  padding:12px 16px;
+  border-right:1px solid var(--glass-border);
+}
+.meta-item:last-child{border-right:none}
+.meta-label{font-size:9px;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px}
+.meta-val{font-size:13px;color:var(--text);font-weight:500}
+
+/* prose */
+.prose p{font-size:13px;color:rgba(241,245,249,0.7);line-height:1.9;margin-bottom:16px}
+.prose h2{
+  font-family:var(--syne);font-weight:700;font-size:22px;
+  color:var(--text);margin:40px 0 14px;letter-spacing:-0.02em;
+  display:flex;align-items:center;gap:10px;
+}
+.prose h2::before{
+  content:'';display:inline-block;width:3px;height:20px;border-radius:2px;
+  background:linear-gradient(180deg,var(--electric),var(--violet));flex-shrink:0;
+}
+.prose h3{
+  font-size:10px;letter-spacing:0.12em;color:var(--electric);
+  margin:28px 0 10px;font-weight:500;
+}
+
+/* callout */
+.callout{
+  margin:24px 0;border-radius:12px;padding:18px 20px;
+  background:rgba(110,231,247,0.05);
+  border:1px solid rgba(110,231,247,0.15);
+  border-left:3px solid var(--electric);
+}
+.callout-label{
+  font-size:9px;letter-spacing:0.14em;color:var(--electric);
+  margin-bottom:8px;display:flex;align-items:center;gap:6px;
+}
+.callout p{font-size:12px;color:rgba(241,245,249,0.65);line-height:1.75;margin:0}
+
+/* code block */
+.code-wrap{
+  margin:24px 0;
+  background:rgba(0,0,0,0.4);
+  border:1px solid var(--glass-border);
+  border-radius:14px;overflow:hidden;
+}
+.code-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 18px;border-bottom:1px solid var(--glass-border);
+  background:rgba(255,255,255,0.02);
+}
+.code-lang-badge{
+  font-size:9px;letter-spacing:0.1em;font-weight:500;
+  padding:3px 10px;border-radius:6px;
+  background:rgba(110,231,247,0.1);
+  border:1px solid rgba(110,231,247,0.2);
+  color:var(--electric);
+}
+.code-dots{display:flex;gap:6px}
+.code-dot{width:10px;height:10px;border-radius:50%}
+.code-body{padding:20px;overflow-x:auto}
+.code-body code{
+  font-size:12px;line-height:1.8;white-space:pre;
+  display:block;font-family:var(--mono);
+}
+.kw{color:#C792EA}.str{color:var(--lime)}.comment{color:var(--muted)}
+.fn{color:var(--electric)}.num{color:var(--rose)}
+
+/* giscus zone */
+.comments-zone{margin-top:56px;padding-top:40px;border-top:1px solid var(--glass-border)}
+.comments-label{
+  font-size:9px;letter-spacing:0.14em;color:var(--muted);
+  display:flex;align-items:center;gap:10px;margin-bottom:20px;
+}
+.comments-label::after{content:'';flex:1;height:1px;background:var(--glass-border)}
+.giscus-ph{
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:14px;padding:32px;text-align:center;
+}
+.giscus-ph p{font-size:12px;color:var(--muted);line-height:1.7}
+.giscus-ph span{color:var(--electric)}
+
+/* RIGHT SIDEBAR */
+.sidebar-r{
+  border-left:1px solid var(--glass-border);
+  padding:24px 20px;
+  position:sticky;top:56px;height:calc(100vh - 56px);
+  overflow-y:auto;
+}
+.outline-label{
+  font-size:9px;letter-spacing:0.14em;color:var(--muted);
+  margin-bottom:16px;display:block;
+}
+.outline-item{
+  display:block;font-size:11px;color:var(--muted);
+  padding:5px 0 5px 12px;
+  border-left:1px solid transparent;
+  text-decoration:none;transition:color .12s,border-color .12s;
+  line-height:1.4;
+}
+.outline-item:hover{color:var(--text);border-left-color:var(--glass-border)}
+.outline-item.active{color:var(--electric);border-left-color:var(--electric)}
+.outline-item.sub{padding-left:22px;font-size:10px}
+
+.outline-divider{height:1px;background:var(--glass-border);margin:20px 0}
+
+/* TP CARD in sidebar */
+.tp-sidebar-card{
+  background:rgba(110,231,247,0.04);
+  border:1px solid rgba(110,231,247,0.15);
+  border-radius:12px;padding:16px;margin-top:4px;
+}
+.tp-card-eyebrow{
+  font-size:9px;letter-spacing:0.12em;color:var(--electric);margin-bottom:8px;
+}
+.tp-card-title{font-size:12px;color:var(--text);line-height:1.4;margin-bottom:12px;font-weight:500}
+.tp-card-link{
+  font-size:10px;color:var(--electric);text-decoration:none;
+  display:flex;align-items:center;gap:4px;
+  transition:gap .15s;
+}
+.tp-card-link:hover{gap:8px}
+
+/* progress bar */
+.progress-wrap{margin-top:24px}
+.progress-label{
+  display:flex;justify-content:space-between;
+  font-size:9px;color:var(--muted);margin-bottom:8px;
+}
+.progress-track{
+  height:4px;background:var(--glass-border);border-radius:2px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;width:25%;border-radius:2px;
+  background:linear-gradient(90deg,var(--electric),var(--violet));
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.main{animation:fadeUp .4s ease both}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<nav>
+  <span class="nav-logo">GL·Cloud</span>
+  <div class="breadcrumb">
+    <span>Cours</span><span class="bc-sep">/</span>
+    <span>Module 01</span><span class="bc-sep">/</span>
+    <span class="bc-cur">Introduction au Cloud</span>
+  </div>
+  <span class="nav-meta">Modifié il y a 2 jours</span>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- LEFT NAV -->
+  <aside class="sidebar-l">
+    <div class="sb-module-header">
+      <span class="sb-module-num">01</span>
+      <span class="sb-module-name">INTRO CLOUD</span>
+    </div>
+    <a class="sb-item active" href="#">
+      <span class="sb-dot"></span>
+      <div><div class="sb-label">Introduction au Cloud</div><div class="sb-sublabel">SÉANCE 1</div></div>
+    </a>
+    <a class="sb-item" href="#">
+      <span class="sb-dot"></span>
+      <div><div class="sb-label">Modèles de service</div><div class="sb-sublabel">SÉANCE 2</div></div>
+    </a>
+    <a class="sb-item" href="#">
+      <span class="sb-dot"></span>
+      <div><div class="sb-label">Économie du Cloud</div><div class="sb-sublabel">SÉANCE 3</div></div>
+    </a>
+    <a class="sb-item" href="#">
+      <span class="sb-dot"></span>
+      <div><div class="sb-label">TP · Déploiement VPS</div><div class="sb-sublabel">SÉANCE 4</div></div>
+    </a>
+
+    <div class="sb-divider"></div>
+
+    <div class="sb-module-header">
+      <span class="sb-module-num" style="color:var(--muted);background:var(--glass);border-color:var(--glass-border)">02</span>
+      <span class="sb-module-name">MICROSERVICES</span>
+    </div>
+    <a class="sb-item" href="#"><span class="sb-dot"></span><div class="sb-label">Introduction microservices</div></a>
+    <a class="sb-item" href="#"><span class="sb-dot"></span><div class="sb-label">Communication & APIs</div></a>
+    <a class="sb-item" href="#"><span class="sb-dot"></span><div class="sb-label">Résilience & patterns</div></div></a>
+
+    <div class="sb-divider"></div>
+
+    <div class="sb-module-header">
+      <span class="sb-module-num" style="color:var(--muted);background:var(--glass);border-color:var(--glass-border)">03</span>
+      <span class="sb-module-name">CONTENEURS</span>
+    </div>
+    <a class="sb-item" href="#"><span class="sb-dot"></span><div class="sb-label">Docker fondamentaux</div></a>
+    <a class="sb-item" href="#"><span class="sb-dot"></span><div class="sb-label">Docker Compose</div></a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="content-eyebrow">MODULE 01 &nbsp;·&nbsp; SÉANCE 1 &nbsp;·&nbsp; FONDAMENTAL</div>
+    <h1><span class="grad">Introduction au Cloud Computing</span></h1>
+
+    <div class="content-meta">
+      <div class="meta-item"><div class="meta-label">AUTEUR</div><div class="meta-val">Prof. Alami</div></div>
+      <div class="meta-item"><div class="meta-label">DURÉE</div><div class="meta-val">3h</div></div>
+      <div class="meta-item"><div class="meta-label">NIVEAU</div><div class="meta-val">Fondamental</div></div>
+      <div class="meta-item"><div class="meta-label">DATE</div><div class="meta-val">10 fév. 2025</div></div>
+    </div>
+
+    <div class="prose">
+      <p>Le cloud computing désigne la mise à disposition de ressources informatiques — serveurs, stockage, bases de données, réseau, logiciels — via Internet, à la demande et selon un modèle de facturation à l'usage.</p>
+
+      <h2>Modèles de déploiement</h2>
+      <p>On distingue quatre modèles selon le niveau de partage et de contrôle de l'infrastructure : public, privé, hybride et multi-cloud. Chaque modèle répond à des contraintes distinctes de sécurité, de coût et de souveraineté.</p>
+
+      <div class="callout">
+        <div class="callout-label">&#9432; NOTE IMPORTANTE</div>
+        <p>Le choix du modèle de déploiement dépend principalement des contraintes réglementaires (RGPD, souveraineté des données) et des exigences de latence applicative. En Europe, le cloud souverain est de plus en plus requis pour les données sensibles.</p>
+      </div>
+
+      <h2>Les trois modèles de service</h2>
+      <h3>IAAS — INFRASTRUCTURE AS A SERVICE</h3>
+      <p>Le fournisseur gère le matériel physique, la virtualisation et le réseau. Le client contrôle le système d'exploitation, le middleware et les applications.</p>
+
+      <div class="code-wrap">
+        <div class="code-header">
+          <span class="code-lang-badge">TERRAFORM · HCL</span>
+          <div class="code-dots">
+            <div class="code-dot" style="background:#FF5F57"></div>
+            <div class="code-dot" style="background:#FEBC2E"></div>
+            <div class="code-dot" style="background:#28C840"></div>
+          </div>
+        </div>
+        <div class="code-body">
+<code><span class="kw">resource</span> <span class="str">"aws_instance"</span> <span class="str">"web"</span> {
+  ami           = <span class="str">"ami-0c55b159cbfafe1f0"</span>
+  instance_type = <span class="str">"t3.micro"</span>
+
+  <span class="comment"># Réseau et sécurité</span>
+  vpc_security_group_ids = [<span class="fn">aws_security_group</span>.web.id]
+  subnet_id              = <span class="fn">aws_subnet</span>.public.id
+
+  tags = {
+    Name        = <span class="str">"gl-cloud-demo"</span>
+    Environment = <span class="str">"cours"</span>
+    Module      = <span class="str">"01-intro"</span>
+  }
+}</code>
+        </div>
+      </div>
+
+      <h3>PAAS — PLATFORM AS A SERVICE</h3>
+      <p>Le fournisseur prend en charge l'infrastructure et le middleware. Le client se concentre uniquement sur le code et les données applicatives. Exemples : Heroku, Vercel, Google App Engine.</p>
+    </div>
+
+    <div class="comments-zone">
+      <div class="comments-label">DISCUSSIONS &amp; QUESTIONS</div>
+      <div class="giscus-ph">
+        <p><span>giscus</span> · commentaires via GitHub Discussions<br>Connectez-vous avec votre compte GitHub pour poser une question ou répondre.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- RIGHT OUTLINE -->
+  <aside class="sidebar-r">
+    <span class="outline-label">SUR CETTE PAGE</span>
+    <a class="outline-item active" href="#">Introduction</a>
+    <a class="outline-item" href="#">Modèles de déploiement</a>
+    <a class="outline-item sub" href="#">Public / Privé</a>
+    <a class="outline-item sub" href="#">Hybride & multi-cloud</a>
+    <a class="outline-item" href="#">Modèles de service</a>
+    <a class="outline-item sub" href="#">IaaS</a>
+    <a class="outline-item sub" href="#">PaaS</a>
+    <a class="outline-item sub" href="#">SaaS</a>
+    <a class="outline-item" href="#">Économie du cloud</a>
+    <a class="outline-item" href="#">Exercices</a>
+
+    <div class="outline-divider"></div>
+
+    <div class="tp-sidebar-card">
+      <div class="tp-card-eyebrow">TP ASSOCIÉ</div>
+      <div class="tp-card-title">Déploiement d'une app Node.js sur un VPS</div>
+      <a class="tp-card-link" href="#">Accéder au TP →</a>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>Progression module 01</span>
+        <span>1/4</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+  </aside>
+
+</div>
+</body>
+</html>

@@ -25,27 +25,45 @@ sortedModules.forEach(mod => {
 ---
 
 <div class="flex flex-col gap-6">
-  {sortedModules.map((mod) => (
-    <div class="mb-0">
-      <span class="text-[9px] tracking-[0.12em] text-[var(--hint)] px-5 pb-2 block uppercase">MODULE {mod.toString().padStart(2, '0')}</span>
-      <div class="flex flex-col">
-        {modulesMap[mod].map((seance) => {
-          const isActive = activeModule === mod && activeSeance === seance.data.seance;
-          return (
-            <a 
-              href={`/cours/module-${mod.toString().padStart(2, '0')}/seance-${seance.data.seance}`}
-              class={`flex items-center gap-2.5 px-5 py-1.5 cursor-pointer transition-colors duration-150 no-underline ${isActive ? 'bg-[var(--bg-2)] border-r-2 border-[var(--accent)]' : 'hover:bg-[var(--bg-2)]'}`}
-            >
-              <span class={`text-[9px] w-[18px] shrink-0 ${isActive ? 'text-[var(--accent)]' : 'text-[var(--hint)]'}`}>
-                S{seance.data.seance}
-              </span>
-              <span class={`text-[11px] leading-tight ${isActive ? 'text-[var(--text)]' : 'text-[var(--muted)]'}`}>
-                {seance.data.titre}
-              </span>
-            </a>
-          );
-        })}
+  {sortedModules.map((mod) => {
+    // Check if the current module contains the active seance
+    const isModuleActive = activeModule === mod;
+    
+    return (
+      <div class="mb-0">
+        <div class="flex items-center gap-2 px-5 py-1.5 mb-1">
+          <span class={`text-[9px] tracking-[0.12em] font-medium px-2 py-0.5 rounded border ${isModuleActive ? 'text-[var(--electric)] bg-[rgba(110,231,247,0.1)] border-[rgba(110,231,247,0.2)]' : 'text-[var(--muted)] bg-[var(--glass)] border-[var(--glass-border)]'}`}>
+            {mod.toString().padStart(2, '0')}
+          </span>
+          <span class="text-[10px] text-[var(--muted)] tracking-[0.06em] uppercase truncate">
+            MODULE {mod.toString().padStart(2, '0')}
+          </span>
+        </div>
+        
+        <div class="flex flex-col">
+          {modulesMap[mod].map((seance) => {
+            const isActive = activeModule === mod && activeSeance === seance.data.seance;
+            return (
+              <a 
+                href={`/cours/module-${mod.toString().padStart(2, '0')}/seance-${seance.data.seance}`}
+                class={`flex items-center gap-2.5 px-5 py-2 cursor-pointer no-underline transition-colors duration-150 relative group hover:bg-[var(--glass)] ${isActive ? 'bg-[rgba(110,231,247,0.06)] before:content-[\'\'] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-0.5 before:bg-gradient-to-b before:from-[var(--electric)] before:to-[var(--violet)] before:rounded-r-sm' : ''}`}
+              >
+                <span class={`w-1.5 h-1.5 rounded-full shrink-0 border transition-colors duration-150 ${isActive ? 'bg-[var(--electric)] border-[var(--electric)]' : 'border-[var(--muted)] group-hover:border-[var(--text)]'}`}></span>
+                <div>
+                  <div class={`text-[11px] leading-[1.4] transition-colors duration-150 ${isActive ? 'text-[var(--text)]' : 'text-[var(--muted)] group-hover:text-[var(--text)]'}`}>
+                    {seance.data.titre}
+                  </div>
+                  <div class="text-[9px] text-[var(--hint)] tracking-[0.06em] mt-[1px]">
+                    SÉANCE {seance.data.seance}
+                  </div>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+        
+        <div class="h-px bg-[var(--glass-border)] mx-4 mt-4"></div>
       </div>
-    </div>
-  ))}
+    );
+  })}
 </div>
