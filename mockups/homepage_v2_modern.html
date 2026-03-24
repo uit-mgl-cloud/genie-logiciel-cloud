@@ -1,620 +1,1132 @@
-
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="UTF-8">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --electric:#6EE7F7;
-  --violet:#A78BFA;
-  --lime:#A3E635;
-  --rose:#FB7185;
-  --bg:#080B12;
-  --glass:rgba(255,255,255,0.04);
-  --glass-border:rgba(255,255,255,0.08);
-  --text:#F1F5F9;
-  --muted:#64748B;
-  --syne:'Syne',sans-serif;
-  --mono:'JetBrains Mono',monospace;
-}
-body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;overflow-x:hidden;min-height:100vh}
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
 
-/* ── ANIMATED GRADIENT MESH BACKGROUND ── */
-.bg-mesh{
-  position:fixed;inset:0;z-index:0;
-  background:
-    radial-gradient(ellipse 80% 60% at 10% 0%, rgba(110,231,247,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 90% 20%, rgba(167,139,250,0.1) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 40% at 50% 80%, rgba(163,230,53,0.07) 0%, transparent 50%);
-  animation: meshPulse 12s ease-in-out infinite alternate;
-  pointer-events:none;
-}
-@keyframes meshPulse{
-  0%{opacity:0.7;transform:scale(1)}
-  100%{opacity:1;transform:scale(1.05)}
-}
+    :root {
+      --electric: #6EE7F7;
+      --violet: #A78BFA;
+      --lime: #A3E635;
+      --rose: #FB7185;
+      --bg: #080B12;
+      --glass: rgba(255, 255, 255, 0.04);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text: #F1F5F9;
+      --muted: #64748B;
+      --syne: 'Syne', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
 
-/* noise overlay */
-.bg-noise{
-  position:fixed;inset:0;z-index:1;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
-  opacity:0.4;
-}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      overflow-x: hidden;
+      min-height: 100vh
+    }
 
-/* ── NAV ── */
-nav{
-  position:sticky;top:0;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 32px;height:60px;
-  background:rgba(8,11,18,0.7);
-  border-bottom:1px solid var(--glass-border);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-}
-.nav-logo{
-  display:flex;align-items:center;gap:10px;
-  font-family:var(--syne);font-weight:800;font-size:17px;
-  background:linear-gradient(135deg,var(--electric),var(--violet));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  letter-spacing:-0.02em;
-}
-.nav-pill{
-  font-size:9px;font-family:var(--mono);font-weight:500;letter-spacing:0.12em;
-  padding:2px 8px;border-radius:999px;
-  background:rgba(110,231,247,0.1);
-  border:1px solid rgba(110,231,247,0.25);
-  color:var(--electric);
-  -webkit-text-fill-color:var(--electric);
-}
-.nav-links{display:flex;gap:2px}
-.nav-link{
-  padding:6px 14px;border-radius:8px;
-  font-size:12px;color:var(--muted);text-decoration:none;
-  transition:color .15s,background .15s;font-family:var(--mono);
-}
-.nav-link:hover{color:var(--text);background:var(--glass)}
-.nav-link.active{color:var(--electric)}
-.btn-gh{
-  display:flex;align-items:center;gap:7px;
-  padding:7px 16px;border-radius:8px;font-size:12px;font-family:var(--mono);
-  background:var(--glass);border:1px solid var(--glass-border);color:var(--text);
-  cursor:pointer;transition:border-color .15s,background .15s;
-}
-.btn-gh:hover{border-color:rgba(110,231,247,0.4);background:rgba(110,231,247,0.06)}
-.gh-dot{width:6px;height:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime)}
+    /* ── ANIMATED GRADIENT MESH BACKGROUND ── */
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(110, 231, 247, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 90% 20%, rgba(167, 139, 250, 0.1) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 50% 80%, rgba(163, 230, 53, 0.07) 0%, transparent 50%);
+      animation: meshPulse 12s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
 
-/* ── CONTENT WRAPPER ── */
-.content{position:relative;z-index:2}
+    @keyframes meshPulse {
+      0% {
+        opacity: 0.7;
+        transform: scale(1)
+      }
 
-/* ── HERO ── */
-.hero{
-  padding:72px 32px 64px;
-  display:grid;grid-template-columns:1fr 340px;gap:48px;align-items:start;
-  max-width:1200px;margin:0 auto;
-}
-.hero-left{}
-.hero-tag{
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:10px;letter-spacing:0.14em;color:var(--muted);
-  margin-bottom:28px;
-  padding:6px 12px;border-radius:6px;
-  border:1px solid var(--glass-border);background:var(--glass);
-}
-.hero-tag-dot{width:5px;height:5px;border-radius:50%;background:var(--lime);animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(163,230,53,0.4)}50%{box-shadow:0 0 0 6px rgba(163,230,53,0)}}
+      100% {
+        opacity: 1;
+        transform: scale(1.05)
+      }
+    }
 
-.hero-title{
-  font-family:var(--syne);font-weight:800;font-size:62px;line-height:0.95;
-  letter-spacing:-0.04em;margin-bottom:28px;
-}
-.hero-title .line1{color:var(--text)}
-.hero-title .line2{
-  background:linear-gradient(90deg,var(--electric) 0%,var(--violet) 50%,var(--rose) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  background-size:200%;
-  animation:gradShift 4s linear infinite;
-}
-@keyframes gradShift{0%{background-position:0%}100%{background-position:200%}}
-.hero-title .line3{color:rgba(241,245,249,0.35)}
+    /* noise overlay */
+    .bg-noise {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
 
-.hero-desc{
-  font-size:13px;color:var(--muted);line-height:1.8;max-width:480px;margin-bottom:36px;
-}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
-.btn-primary{
-  padding:11px 24px;border-radius:10px;font-size:13px;font-family:var(--mono);font-weight:500;
-  background:linear-gradient(135deg,var(--electric),var(--violet));
-  color:#080B12;border:none;cursor:pointer;
-  transition:opacity .15s,transform .15s;
-  box-shadow:0 0 32px rgba(110,231,247,0.2);
-}
-.btn-primary:hover{opacity:0.9;transform:translateY(-1px)}
-.btn-secondary{
-  padding:11px 24px;border-radius:10px;font-size:13px;font-family:var(--mono);
-  background:var(--glass);border:1px solid var(--glass-border);color:var(--text);
-  cursor:pointer;transition:border-color .15s,background .15s;
-}
-.btn-secondary:hover{border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.07)}
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 60px;
+      background: rgba(8, 11, 18, 0.7);
+      border-bottom: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
 
-/* HERO STATS CARD */
-.hero-right{}
-.stats-card{
-  background:var(--glass);border:1px solid var(--glass-border);
-  border-radius:20px;padding:28px;
-  backdrop-filter:blur(12px);
-  position:relative;overflow:hidden;
-}
-.stats-card::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(110,231,247,0.06) 0%,rgba(167,139,250,0.04) 100%);
-  pointer-events:none;
-}
-.stats-card-label{
-  font-size:9px;letter-spacing:0.14em;color:var(--muted);margin-bottom:20px;
-}
-.stat-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 0;border-bottom:1px solid var(--glass-border);
-}
-.stat-row:last-child{border-bottom:none}
-.stat-name{font-size:12px;color:var(--muted)}
-.stat-val{
-  font-family:var(--syne);font-weight:700;font-size:22px;
-  background:linear-gradient(90deg,var(--electric),var(--violet));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.stat-val.lime{background:linear-gradient(90deg,var(--lime),var(--electric));-webkit-background-clip:text;background-clip:text}
-.stat-val.rose{background:linear-gradient(90deg,var(--rose),var(--violet));-webkit-background-clip:text;background-clip:text}
-.stat-val.plain{background:none;-webkit-text-fill-color:var(--lime);color:var(--lime)}
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--syne);
+      font-weight: 800;
+      font-size: 17px;
+      background: linear-gradient(135deg, var(--electric), var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+    }
 
-/* ── SECTION TITLE ── */
-.section{padding:0 32px;max-width:1200px;margin:0 auto}
-.section-head{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:24px;padding-bottom:16px;
-  border-bottom:1px solid var(--glass-border);
-}
-.section-title{
-  font-family:var(--syne);font-weight:700;font-size:13px;letter-spacing:0.08em;
-  color:var(--muted);text-transform:uppercase;
-  display:flex;align-items:center;gap:10px;
-}
-.section-title::before{
-  content:'';width:18px;height:2px;border-radius:1px;
-  background:linear-gradient(90deg,var(--electric),var(--violet));
-}
-.section-link{font-size:11px;color:var(--muted);text-decoration:none;transition:color .15s}
-.section-link:hover{color:var(--electric)}
+    .nav-pill {
+      font-size: 9px;
+      font-family: var(--mono);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(110, 231, 247, 0.1);
+      border: 1px solid rgba(110, 231, 247, 0.25);
+      color: var(--electric);
+      -webkit-text-fill-color: var(--electric);
+    }
 
-/* ── MODULE GRID ── */
-.module-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:64px;
-}
-.module-card{
-  background:var(--glass);border:1px solid var(--glass-border);
-  border-radius:16px;padding:24px;cursor:pointer;
-  transition:border-color .2s,background .2s,transform .2s;
-  position:relative;overflow:hidden;text-decoration:none;display:block;
-}
-.module-card:hover{
-  border-color:rgba(110,231,247,0.25);
-  background:rgba(110,231,247,0.04);
-  transform:translateY(-2px);
-}
-.module-card::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(110,231,247,0.05) 0%,transparent 60%);
-  opacity:0;transition:opacity .2s;pointer-events:none;
-}
-.module-card:hover::after{opacity:1}
+    .nav-links {
+      display: flex;
+      gap: 2px
+    }
 
-.module-num{
-  font-size:10px;letter-spacing:0.1em;font-weight:500;
-  color:var(--electric);margin-bottom:14px;
-  display:flex;align-items:center;gap:6px;
-}
-.module-num-bar{height:1px;flex:1;background:linear-gradient(90deg,rgba(110,231,247,0.4),transparent)}
-.module-title{
-  font-family:var(--syne);font-weight:700;font-size:16px;
-  line-height:1.25;color:var(--text);margin-bottom:10px;letter-spacing:-0.01em;
-}
-.module-desc{font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:16px}
-.module-footer{display:flex;align-items:center;justify-content:space-between}
-.module-tags{display:flex;gap:6px;flex-wrap:wrap}
-.tag{
-  font-size:9px;letter-spacing:0.08em;font-weight:500;
-  padding:3px 9px;border-radius:999px;
-  border:1px solid var(--glass-border);color:var(--muted);
-  transition:border-color .15s,color .15s;
-}
-.module-card:hover .tag{border-color:rgba(110,231,247,0.2);color:rgba(110,231,247,0.8)}
-.tag.active{background:rgba(163,230,53,0.12);border-color:rgba(163,230,53,0.3);color:var(--lime)}
-.module-arrow{
-  font-size:16px;color:var(--muted);
-  transform:rotate(-45deg);transition:transform .2s,color .2s;
-}
-.module-card:hover .module-arrow{transform:rotate(0deg);color:var(--electric)}
+    .nav-link {
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .15s, background .15s;
+      font-family: var(--mono);
+    }
 
-/* featured card */
-.module-card.featured{
-  border-color:rgba(110,231,247,0.2);
-  background:linear-gradient(135deg,rgba(110,231,247,0.06),rgba(167,139,250,0.04));
-}
-.module-card.featured .module-num{color:var(--electric)}
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--glass)
+    }
 
-/* ── TP TABLE ── */
-.tp-table{
-  background:var(--glass);border:1px solid var(--glass-border);
-  border-radius:16px;overflow:hidden;margin-bottom:64px;
-}
-.tp-header{
-  display:grid;grid-template-columns:56px 1fr 160px 80px 90px;
-  padding:12px 20px;border-bottom:1px solid var(--glass-border);
-  font-size:9px;letter-spacing:0.12em;color:var(--muted);
-}
-.tp-row{
-  display:grid;grid-template-columns:56px 1fr 160px 80px 90px;
-  padding:14px 20px;border-bottom:1px solid var(--glass-border);
-  align-items:center;cursor:pointer;
-  transition:background .15s;
-  text-decoration:none;
-}
-.tp-row:last-child{border-bottom:none}
-.tp-row:hover{background:rgba(255,255,255,0.03)}
-.tp-num{
-  font-size:10px;font-weight:500;
-  color:var(--electric);font-family:var(--mono);
-}
-.tp-title{font-size:12px;color:var(--text)}
-.tp-module-ref{font-size:11px;color:var(--muted)}
-.tp-diff{font-size:10px;color:var(--muted)}
-.badge{
-  display:inline-flex;align-items:center;gap:5px;
-  font-size:9px;letter-spacing:0.08em;font-weight:500;
-  padding:3px 10px;border-radius:999px;
-}
-.badge-open{background:rgba(163,230,53,0.12);border:1px solid rgba(163,230,53,0.3);color:var(--lime)}
-.badge-open::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--lime);animation:pulse 2s infinite}
-.badge-soon{background:rgba(100,116,139,0.12);border:1px solid rgba(100,116,139,0.2);color:var(--muted)}
+    .nav-link.active {
+      color: var(--electric)
+    }
 
-/* ── CONTRIBUTIONS ── */
-.contrib-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:64px;
-}
-.contrib-card{
-  background:var(--glass);border:1px solid var(--glass-border);
-  border-radius:16px;padding:22px;cursor:pointer;
-  transition:border-color .2s,background .2s,transform .2s;
-  position:relative;overflow:hidden;
-}
-.contrib-card:hover{
-  border-color:rgba(167,139,250,0.25);
-  background:rgba(167,139,250,0.04);
-  transform:translateY(-2px);
-}
-.contrib-top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.avatar{
-  width:32px;height:32px;border-radius:10px;
-  background:linear-gradient(135deg,var(--electric),var(--violet));
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:700;color:#080B12;
-  font-family:var(--syne);flex-shrink:0;
-}
-.contrib-meta-top{flex:1}
-.contrib-author-name{font-size:12px;color:var(--text);margin-bottom:2px}
-.contrib-date{font-size:10px;color:var(--muted)}
-.type-badge{
-  font-size:9px;letter-spacing:0.08em;
-  padding:3px 9px;border-radius:6px;
-}
-.type-cas{background:rgba(251,113,133,0.1);border:1px solid rgba(251,113,133,0.25);color:var(--rose)}
-.type-solution{background:rgba(163,230,53,0.1);border:1px solid rgba(163,230,53,0.25);color:var(--lime)}
-.type-ressource{background:rgba(110,231,247,0.1);border:1px solid rgba(110,231,247,0.25);color:var(--electric)}
-.type-impl{background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.25);color:var(--violet)}
-.contrib-title{font-family:var(--syne);font-size:14px;font-weight:700;color:var(--text);line-height:1.35;margin-bottom:8px}
-.contrib-tags{display:flex;gap:6px;flex-wrap:wrap}
+    .btn-gh {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-family: var(--mono);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+    }
 
-/* ── FOOTER ── */
-footer{
-  margin-top:0;padding:32px;
-  border-top:1px solid var(--glass-border);
-  max-width:1200px;margin:0 auto;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.footer-brand{
-  font-family:var(--syne);font-weight:800;font-size:13px;
-  background:linear-gradient(90deg,var(--electric),var(--violet));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.footer-text{font-size:11px;color:var(--muted);margin-top:4px}
-.footer-links{display:flex;gap:16px}
-.footer-link{font-size:11px;color:var(--muted);text-decoration:none;transition:color .15s}
-.footer-link:hover{color:var(--electric)}
+    .btn-gh:hover {
+      border-color: rgba(110, 231, 247, 0.4);
+      background: rgba(110, 231, 247, 0.06)
+    }
 
-/* ── ENTRANCE ANIMATIONS ── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.hero-left{animation:fadeUp .6s ease both}
-.hero-right{animation:fadeUp .6s .15s ease both}
-.module-card{animation:fadeUp .5s ease both}
-.module-card:nth-child(1){animation-delay:.05s}
-.module-card:nth-child(2){animation-delay:.1s}
-.module-card:nth-child(3){animation-delay:.15s}
-.module-card:nth-child(4){animation-delay:.2s}
-.module-card:nth-child(5){animation-delay:.25s}
-.module-card:nth-child(6){animation-delay:.3s}
+    .gh-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 8px var(--lime)
+    }
 
-/* ── DIVIDER ── */
-.divider{height:1px;background:linear-gradient(90deg,transparent,var(--glass-border),transparent);margin:48px 0}
-</style>
+    /* ── CONTENT WRAPPER ── */
+    .content {
+      position: relative;
+      z-index: 2
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 72px 32px 64px;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 48px;
+      align-items: start;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-left {}
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 28px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+    }
+
+    .hero-tag-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--lime);
+      animation: pulse 2s ease-in-out infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(163, 230, 53, 0.4)
+      }
+
+      50% {
+        box-shadow: 0 0 0 6px rgba(163, 230, 53, 0)
+      }
+    }
+
+    .hero-title {
+      font-family: var(--syne);
+      font-weight: 800;
+      font-size: 62px;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin-bottom: 28px;
+    }
+
+    .hero-title .line1 {
+      color: var(--text)
+    }
+
+    .hero-title .line2 {
+      background: linear-gradient(90deg, var(--electric) 0%, var(--violet) 50%, var(--rose) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200%;
+      animation: gradShift 4s linear infinite;
+    }
+
+    @keyframes gradShift {
+      0% {
+        background-position: 0%
+      }
+
+      100% {
+        background-position: 200%
+      }
+    }
+
+    .hero-title .line3 {
+      color: rgba(241, 245, 249, 0.35)
+    }
+
+    .hero-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 480px;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    .btn-primary {
+      padding: 11px 24px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-family: var(--mono);
+      font-weight: 500;
+      background: linear-gradient(135deg, var(--electric), var(--violet));
+      color: #080B12;
+      border: none;
+      cursor: pointer;
+      transition: opacity .15s, transform .15s;
+      box-shadow: 0 0 32px rgba(110, 231, 247, 0.2);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-1px)
+    }
+
+    .btn-secondary {
+      padding: 11px 24px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-family: var(--mono);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.07)
+    }
+
+    /* HERO STATS CARD */
+    .hero-right {}
+
+    .stats-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stats-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(110, 231, 247, 0.06) 0%, rgba(167, 139, 250, 0.04) 100%);
+      pointer-events: none;
+    }
+
+    .stats-card-label {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .stat-row:last-child {
+      border-bottom: none
+    }
+
+    .stat-name {
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    .stat-val {
+      font-family: var(--syne);
+      font-weight: 700;
+      font-size: 22px;
+      background: linear-gradient(90deg, var(--electric), var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-val.lime {
+      background: linear-gradient(90deg, var(--lime), var(--electric));
+      -webkit-background-clip: text;
+      background-clip: text
+    }
+
+    .stat-val.rose {
+      background: linear-gradient(90deg, var(--rose), var(--violet));
+      -webkit-background-clip: text;
+      background-clip: text
+    }
+
+    .stat-val.plain {
+      background: none;
+      -webkit-text-fill-color: var(--lime);
+      color: var(--lime)
+    }
+
+    /* ── SECTION TITLE ── */
+    .section {
+      padding: 0 32px;
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .section-title {
+      font-family: var(--syne);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 18px;
+      height: 2px;
+      border-radius: 1px;
+      background: linear-gradient(90deg, var(--electric), var(--violet));
+    }
+
+    .section-link {
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .15s
+    }
+
+    .section-link:hover {
+      color: var(--electric)
+    }
+
+    /* ── MODULE GRID ── */
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 64px;
+    }
+
+    .module-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 24px;
+      cursor: pointer;
+      transition: border-color .2s, background .2s, transform .2s;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      display: block;
+    }
+
+    .module-card:hover {
+      border-color: rgba(110, 231, 247, 0.25);
+      background: rgba(110, 231, 247, 0.04);
+      transform: translateY(-2px);
+    }
+
+    .module-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(110, 231, 247, 0.05) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity .2s;
+      pointer-events: none;
+    }
+
+    .module-card:hover::after {
+      opacity: 1
+    }
+
+    .module-num {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      font-weight: 500;
+      color: var(--electric);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .module-num-bar {
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, rgba(110, 231, 247, 0.4), transparent)
+    }
+
+    .module-title {
+      font-family: var(--syne);
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.25;
+      color: var(--text);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .module-desc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 16px
+    }
+
+    .module-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .module-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap
+    }
+
+    .tag {
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--glass-border);
+      color: var(--muted);
+      transition: border-color .15s, color .15s;
+    }
+
+    .module-card:hover .tag {
+      border-color: rgba(110, 231, 247, 0.2);
+      color: rgba(110, 231, 247, 0.8)
+    }
+
+    .tag.active {
+      background: rgba(163, 230, 53, 0.12);
+      border-color: rgba(163, 230, 53, 0.3);
+      color: var(--lime)
+    }
+
+    .module-arrow {
+      font-size: 16px;
+      color: var(--muted);
+      transform: rotate(-45deg);
+      transition: transform .2s, color .2s;
+    }
+
+    .module-card:hover .module-arrow {
+      transform: rotate(0deg);
+      color: var(--electric)
+    }
+
+    /* featured card */
+    .module-card.featured {
+      border-color: rgba(110, 231, 247, 0.2);
+      background: linear-gradient(135deg, rgba(110, 231, 247, 0.06), rgba(167, 139, 250, 0.04));
+    }
+
+    .module-card.featured .module-num {
+      color: var(--electric)
+    }
+
+    /* ── TP TABLE ── */
+    .tp-table {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 64px;
+    }
+
+    .tp-header {
+      display: grid;
+      grid-template-columns: 56px 1fr 160px 80px 90px;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--glass-border);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    .tp-row {
+      display: grid;
+      grid-template-columns: 56px 1fr 160px 80px 90px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--glass-border);
+      align-items: center;
+      cursor: pointer;
+      transition: background .15s;
+      text-decoration: none;
+    }
+
+    .tp-row:last-child {
+      border-bottom: none
+    }
+
+    .tp-row:hover {
+      background: rgba(255, 255, 255, 0.03)
+    }
+
+    .tp-num {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--electric);
+      font-family: var(--mono);
+    }
+
+    .tp-title {
+      font-size: 12px;
+      color: var(--text)
+    }
+
+    .tp-module-ref {
+      font-size: 11px;
+      color: var(--muted)
+    }
+
+    .tp-diff {
+      font-size: 10px;
+      color: var(--muted)
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .badge-open {
+      background: rgba(163, 230, 53, 0.12);
+      border: 1px solid rgba(163, 230, 53, 0.3);
+      color: var(--lime)
+    }
+
+    .badge-open::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--lime);
+      animation: pulse 2s infinite
+    }
+
+    .badge-soon {
+      background: rgba(100, 116, 139, 0.12);
+      border: 1px solid rgba(100, 116, 139, 0.2);
+      color: var(--muted)
+    }
+
+    /* ── CONTRIBUTIONS ── */
+    .contrib-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 64px;
+    }
+
+    .contrib-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 22px;
+      cursor: pointer;
+      transition: border-color .2s, background .2s, transform .2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contrib-card:hover {
+      border-color: rgba(167, 139, 250, 0.25);
+      background: rgba(167, 139, 250, 0.04);
+      transform: translateY(-2px);
+    }
+
+    .contrib-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--electric), var(--violet));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #080B12;
+      font-family: var(--syne);
+      flex-shrink: 0;
+    }
+
+    .contrib-meta-top {
+      flex: 1
+    }
+
+    .contrib-author-name {
+      font-size: 12px;
+      color: var(--text);
+      margin-bottom: 2px
+    }
+
+    .contrib-date {
+      font-size: 10px;
+      color: var(--muted)
+    }
+
+    .type-badge {
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    .type-cas {
+      background: rgba(251, 113, 133, 0.1);
+      border: 1px solid rgba(251, 113, 133, 0.25);
+      color: var(--rose)
+    }
+
+    .type-solution {
+      background: rgba(163, 230, 53, 0.1);
+      border: 1px solid rgba(163, 230, 53, 0.25);
+      color: var(--lime)
+    }
+
+    .type-ressource {
+      background: rgba(110, 231, 247, 0.1);
+      border: 1px solid rgba(110, 231, 247, 0.25);
+      color: var(--electric)
+    }
+
+    .type-impl {
+      background: rgba(167, 139, 250, 0.1);
+      border: 1px solid rgba(167, 139, 250, 0.25);
+      color: var(--violet)
+    }
+
+    .contrib-title {
+      font-family: var(--syne);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.35;
+      margin-bottom: 8px
+    }
+
+    .contrib-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      margin-top: 0;
+      padding: 32px;
+      border-top: 1px solid var(--glass-border);
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      font-family: var(--syne);
+      font-weight: 800;
+      font-size: 13px;
+      background: linear-gradient(90deg, var(--electric), var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-text {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px
+    }
+
+    .footer-link {
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .15s
+    }
+
+    .footer-link:hover {
+      color: var(--electric)
+    }
+
+    /* ── ENTRANCE ANIMATIONS ── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .hero-left {
+      animation: fadeUp .6s ease both
+    }
+
+    .hero-right {
+      animation: fadeUp .6s .15s ease both
+    }
+
+    .module-card {
+      animation: fadeUp .5s ease both
+    }
+
+    .module-card:nth-child(1) {
+      animation-delay: .05s
+    }
+
+    .module-card:nth-child(2) {
+      animation-delay: .1s
+    }
+
+    .module-card:nth-child(3) {
+      animation-delay: .15s
+    }
+
+    .module-card:nth-child(4) {
+      animation-delay: .2s
+    }
+
+    .module-card:nth-child(5) {
+      animation-delay: .25s
+    }
+
+    .module-card:nth-child(6) {
+      animation-delay: .3s
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+      margin: 48px 0
+    }
+  </style>
 </head>
+
 <body>
-<div class="bg-mesh"></div>
-<div class="bg-noise"></div>
-<div class="content">
+  <div class="bg-mesh"></div>
+  <div class="bg-noise"></div>
+  <div class="content">
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">
-    GL·Cloud
-    <span class="nav-pill">M2 · 2025</span>
-  </div>
-  <div class="nav-links">
-    <a class="nav-link active" href="#">Cours</a>
-    <a class="nav-link" href="#">TP</a>
-    <a class="nav-link" href="#">Projets</a>
-    <a class="nav-link" href="#">Contributions</a>
-    <a class="nav-link" href="#">Ressources</a>
-  </div>
-  <button class="btn-gh">
-    <span class="gh-dot"></span>
-    Contribuer via GitHub
-  </button>
-</nav>
+    <!-- NAV -->
+    <nav>
+      <div class="nav-logo">
+        GL·Cloud
+        <span class="nav-pill">M2 · 2025</span>
+      </div>
+      <div class="nav-links">
+        <a class="nav-link active" href="#">Cours</a>
+        <a class="nav-link" href="#">TP</a>
+        <a class="nav-link" href="#">Projets</a>
+        <a class="nav-link" href="#">Contributions</a>
+        <a class="nav-link" href="#">Ressources</a>
+      </div>
+      <button class="btn-gh">
+        <span class="gh-dot"></span>
+        Contribuer via GitHub
+      </button>
+    </nav>
 
-<!-- HERO -->
-<div style="max-width:1200px;margin:0 auto;padding:0 32px">
-<div class="hero" style="padding:72px 0 64px">
-  <div class="hero-left">
-    <div class="hero-tag">
-      <span class="hero-tag-dot"></span>
-      MASTER INFORMATIQUE · SEMESTRE 2 · OPEN SOURCE
-    </div>
-    <h1 class="hero-title">
-      <div class="line1">Génie</div>
-      <div class="line2">Logiciel</div>
-      <div class="line3">Cloud Computing</div>
-    </h1>
-    <p class="hero-desc">Plateforme collaborative du cours M2. Cours, TP et projets cloud — entièrement open source, versionné sur GitHub, enrichi par chaque promotion.</p>
-    <div class="hero-actions">
-      <button class="btn-primary">Commencer le cours →</button>
-      <button class="btn-secondary">Voir sur GitHub</button>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="stats-card">
-      <div class="stats-card-label">PLATEFORME · STATS EN DIRECT</div>
-      <div class="stat-row">
-        <span class="stat-name">Modules de cours</span>
-        <span class="stat-val">08</span>
-      </div>
-      <div class="stat-row">
-        <span class="stat-name">Travaux pratiques</span>
-        <span class="stat-val">12</span>
-      </div>
-      <div class="stat-row">
-        <span class="stat-name">Contributions étudiantes</span>
-        <span class="stat-val lime">34</span>
-      </div>
-      <div class="stat-row">
-        <span class="stat-name">Étudiants actifs</span>
-        <span class="stat-val rose">18</span>
-      </div>
-      <div class="stat-row">
-        <span class="stat-name">Coût d'hébergement</span>
-        <span class="stat-val plain">0 €</span>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
-<div style="max-width:1200px;margin:0 auto">
-
-<!-- MODULES -->
-<div class="section">
-  <div class="section-head">
-    <span class="section-title">Modules du cours</span>
-    <a class="section-link" href="#">Voir tous →</a>
-  </div>
-  <div class="module-grid">
-    <a class="module-card featured" href="#">
-      <div class="module-num">01 <span class="module-num-bar"></span></div>
-      <div class="module-title">Introduction au Cloud Computing</div>
-      <div class="module-desc">Modèles de service IaaS/PaaS/SaaS, providers majeurs, économie et TCO du cloud.</div>
-      <div class="module-footer">
-        <div class="module-tags"><span class="tag active">En cours</span><span class="tag">4 séances</span></div>
-        <span class="module-arrow">↗</span>
-      </div>
-    </a>
-    <a class="module-card" href="#">
-      <div class="module-num">02 <span class="module-num-bar"></span></div>
-      <div class="module-title">Architecture Microservices</div>
-      <div class="module-desc">Décomposition, communication inter-services, patterns de résilience et API gateway.</div>
-      <div class="module-footer">
-        <div class="module-tags"><span class="tag">3 séances</span><span class="tag">Docker</span></div>
-        <span class="module-arrow">↗</span>
-      </div>
-    </a>
-    <a class="module-card" href="#">
-      <div class="module-num">03 <span class="module-num-bar"></span></div>
-      <div class="module-title">Conteneurisation & Orchestration</div>
-      <div class="module-desc">Docker avancé, Kubernetes, Helm charts et gestion de clusters en production.</div>
-      <div class="module-footer">
-        <div class="module-tags"><span class="tag">4 séances</span><span class="tag">k8s</span></div>
-        <span class="module-arrow">↗</span>
-      </div>
-    </a>
-    <a class="module-card" href="#">
-      <div class="module-num">04 <span class="module-num-bar"></span></div>
-      <div class="module-title">Infrastructure as Code</div>
-      <div class="module-desc">Terraform, Pulumi, gestion déclarative et state management de l'infrastructure.</div>
-      <div class="module-footer">
-        <div class="module-tags"><span class="tag">3 séances</span><span class="tag">Terraform</span></div>
-        <span class="module-arrow">↗</span>
-      </div>
-    </a>
-    <a class="module-card" href="#">
-      <div class="module-num">05 <span class="module-num-bar"></span></div>
-      <div class="module-title">CI/CD & DevOps</div>
-      <div class="module-desc">Pipelines GitHub Actions, déploiement continu, GitOps et feature flags.</div>
-      <div class="module-footer">
-        <div class="module-tags"><span class="tag">3 séances</span><span class="tag">GitOps</span></div>
-        <span class="module-arrow">↗</span>
-      </div>
-    </a>
-    <a class="module-card" href="#">
-      <div class="module-num">06 <span class="module-num-bar"></span></div>
-      <div class="module-title">Observabilité & SRE</div>
-      <div class="module-desc">Logs, métriques, traces distribuées. Prometheus, Grafana, SLOs et error budgets.</div>
-      <div class="module-footer">
-        <div class="module-tags"><span class="tag">3 séances</span><span class="tag">Prometheus</span></div>
-        <span class="module-arrow">↗</span>
-      </div>
-    </a>
-  </div>
-</div>
-
-<!-- DIVIDER -->
-<div class="divider" style="margin:0 32px 48px"></div>
-
-<!-- TPS -->
-<div class="section" style="margin-bottom:64px">
-  <div class="section-head">
-    <span class="section-title">Travaux pratiques</span>
-    <a class="section-link" href="#">12 TP au total →</a>
-  </div>
-  <div class="tp-table">
-    <div class="tp-header">
-      <span>N°</span>
-      <span>Intitulé</span>
-      <span>Module</span>
-      <span>Durée</span>
-      <span>Statut</span>
-    </div>
-    <a class="tp-row" href="#">
-      <span class="tp-num">TP·01</span>
-      <span class="tp-title">Déploiement d'une app Node.js sur VPS — IaaS bare metal</span>
-      <span class="tp-module-ref">01 · Intro Cloud</span>
-      <span class="tp-diff">4h</span>
-      <span><span class="badge badge-open">Ouvert</span></span>
-    </a>
-    <a class="tp-row" href="#">
-      <span class="tp-num">TP·02</span>
-      <span class="tp-title">Conteneurisation d'une API REST avec Docker Compose</span>
-      <span class="tp-module-ref">03 · Conteneurs</span>
-      <span class="tp-diff">3h</span>
-      <span><span class="badge badge-open">Ouvert</span></span>
-    </a>
-    <a class="tp-row" href="#">
-      <span class="tp-num">TP·03</span>
-      <span class="tp-title">Premier cluster Kubernetes avec k3s — déploiement et scaling</span>
-      <span class="tp-module-ref">03 · Orchestration</span>
-      <span class="tp-diff">5h</span>
-      <span><span class="badge badge-soon">À venir</span></span>
-    </a>
-    <a class="tp-row" href="#">
-      <span class="tp-num">TP·04</span>
-      <span class="tp-title">Infrastructure AWS avec Terraform — VPC, EC2, RDS, S3</span>
-      <span class="tp-module-ref">04 · IaC</span>
-      <span class="tp-diff">6h</span>
-      <span><span class="badge badge-soon">À venir</span></span>
-    </a>
-  </div>
-</div>
-
-<!-- CONTRIBUTIONS -->
-<div class="section">
-  <div class="section-head">
-    <span class="section-title">Contributions étudiantes</span>
-    <a class="section-link" href="#">Voir toutes →</a>
-  </div>
-  <div class="contrib-grid">
-    <div class="contrib-card">
-      <div class="contrib-top">
-        <div class="avatar">AM</div>
-        <div class="contrib-meta-top">
-          <div class="contrib-author-name">a.mansouri</div>
-          <div class="contrib-date">il y a 3 jours</div>
+    <!-- HERO -->
+    <div style="max-width:1200px;margin:0 auto;padding:0 32px">
+      <div class="hero" style="padding:72px 0 64px">
+        <div class="hero-left">
+          <div class="hero-tag">
+            <span class="hero-tag-dot"></span>
+            MASTER INFORMATIQUE · SEMESTRE 2 · OPEN SOURCE
+          </div>
+          <h1 class="hero-title">
+            <div class="line1">Génie</div>
+            <div class="line2">Logiciel</div>
+            <div class="line3">Cloud Computing</div>
+          </h1>
+          <p class="hero-desc">Plateforme collaborative du cours M2. Cours, TP et projets cloud — entièrement open
+            source, versionné sur GitHub, enrichi par chaque promotion.</p>
+          <div class="hero-actions">
+            <button class="btn-primary">Commencer le cours →</button>
+            <button class="btn-secondary">Voir sur GitHub</button>
+          </div>
         </div>
-        <span class="type-badge type-cas">ÉTUDE DE CAS</span>
-      </div>
-      <div class="contrib-title">Migration d'un monolithe Laravel vers microservices — retour d'expérience</div>
-      <div class="contrib-tags">
-        <span class="tag">Laravel</span><span class="tag">Docker</span><span class="tag">RabbitMQ</span>
-      </div>
-    </div>
-    <div class="contrib-card">
-      <div class="contrib-top">
-        <div class="avatar" style="background:linear-gradient(135deg,var(--lime),var(--electric))">KB</div>
-        <div class="contrib-meta-top">
-          <div class="contrib-author-name">k.benali</div>
-          <div class="contrib-date">il y a 5 jours</div>
+        <div class="hero-right">
+          <div class="stats-card">
+            <div class="stats-card-label">PLATEFORME · STATS EN DIRECT</div>
+            <div class="stat-row">
+              <span class="stat-name">Modules de cours</span>
+              <span class="stat-val">08</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-name">Travaux pratiques</span>
+              <span class="stat-val">12</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-name">Contributions étudiantes</span>
+              <span class="stat-val lime">34</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-name">Étudiants actifs</span>
+              <span class="stat-val rose">18</span>
+            </div>
+          </div>
         </div>
-        <span class="type-badge type-solution">SOLUTION TP</span>
-      </div>
-      <div class="contrib-title">Solution annotée TP·02 — multi-stage builds et optimisation d'image Docker</div>
-      <div class="contrib-tags">
-        <span class="tag">Docker</span><span class="tag">TP·02</span>
       </div>
     </div>
-    <div class="contrib-card">
-      <div class="contrib-top">
-        <div class="avatar" style="background:linear-gradient(135deg,var(--electric),#60A5FA)">SR</div>
-        <div class="contrib-meta-top">
-          <div class="contrib-author-name">s.rachidi</div>
-          <div class="contrib-date">il y a 1 semaine</div>
-        </div>
-        <span class="type-badge type-ressource">RESSOURCE</span>
-      </div>
-      <div class="contrib-title">Cheatsheet Terraform — modules, workspaces, state remote sur S3</div>
-      <div class="contrib-tags">
-        <span class="tag">Terraform</span><span class="tag">AWS</span>
-      </div>
-    </div>
-    <div class="contrib-card">
-      <div class="contrib-top">
-        <div class="avatar" style="background:linear-gradient(135deg,var(--violet),var(--rose))">YE</div>
-        <div class="contrib-meta-top">
-          <div class="contrib-author-name">y.el-fassi</div>
-          <div class="contrib-date">il y a 2 semaines</div>
-        </div>
-        <span class="type-badge type-impl">IMPLÉMENTATION</span>
-      </div>
-      <div class="contrib-title">Dashboard Grafana pour monitoring d'un cluster k3s — template complet</div>
-      <div class="contrib-tags">
-        <span class="tag">Grafana</span><span class="tag">Prometheus</span><span class="tag">k3s</span>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- FOOTER -->
-<footer>
-  <div>
-    <div class="footer-brand">GL·Cloud</div>
-    <div class="footer-text">M2 Informatique · Open Source · Hébergé sur GitHub Pages</div>
-  </div>
-  <div class="footer-links">
-    <a class="footer-link" href="#">GitHub</a>
-    <a class="footer-link" href="#">Contribuer</a>
-    <a class="footer-link" href="#">Discussions</a>
-    <a class="footer-link" href="#">Recherche</a>
-  </div>
-</footer>
+    <div style="max-width:1200px;margin:0 auto">
 
-</div>
-</div>
+      <!-- MODULES -->
+      <div class="section">
+        <div class="section-head">
+          <span class="section-title">Modules du cours</span>
+          <a class="section-link" href="#">Voir tous →</a>
+        </div>
+        <div class="module-grid">
+          <a class="module-card featured" href="#">
+            <div class="module-num">01 <span class="module-num-bar"></span></div>
+            <div class="module-title">Introduction au Cloud Computing</div>
+            <div class="module-desc">Modèles de service IaaS/PaaS/SaaS, providers majeurs, économie et TCO du cloud.
+            </div>
+            <div class="module-footer">
+              <div class="module-tags"><span class="tag active">En cours</span><span class="tag">4 séances</span></div>
+              <span class="module-arrow">↗</span>
+            </div>
+          </a>
+          <a class="module-card" href="#">
+            <div class="module-num">02 <span class="module-num-bar"></span></div>
+            <div class="module-title">Architecture Microservices</div>
+            <div class="module-desc">Décomposition, communication inter-services, patterns de résilience et API gateway.
+            </div>
+            <div class="module-footer">
+              <div class="module-tags"><span class="tag">3 séances</span><span class="tag">Docker</span></div>
+              <span class="module-arrow">↗</span>
+            </div>
+          </a>
+          <a class="module-card" href="#">
+            <div class="module-num">03 <span class="module-num-bar"></span></div>
+            <div class="module-title">Conteneurisation & Orchestration</div>
+            <div class="module-desc">Docker avancé, Kubernetes, Helm charts et gestion de clusters en production.</div>
+            <div class="module-footer">
+              <div class="module-tags"><span class="tag">4 séances</span><span class="tag">k8s</span></div>
+              <span class="module-arrow">↗</span>
+            </div>
+          </a>
+          <a class="module-card" href="#">
+            <div class="module-num">04 <span class="module-num-bar"></span></div>
+            <div class="module-title">Infrastructure as Code</div>
+            <div class="module-desc">Terraform, Pulumi, gestion déclarative et state management de l'infrastructure.
+            </div>
+            <div class="module-footer">
+              <div class="module-tags"><span class="tag">3 séances</span><span class="tag">Terraform</span></div>
+              <span class="module-arrow">↗</span>
+            </div>
+          </a>
+          <a class="module-card" href="#">
+            <div class="module-num">05 <span class="module-num-bar"></span></div>
+            <div class="module-title">CI/CD & DevOps</div>
+            <div class="module-desc">Pipelines GitHub Actions, déploiement continu, GitOps et feature flags.</div>
+            <div class="module-footer">
+              <div class="module-tags"><span class="tag">3 séances</span><span class="tag">GitOps</span></div>
+              <span class="module-arrow">↗</span>
+            </div>
+          </a>
+          <a class="module-card" href="#">
+            <div class="module-num">06 <span class="module-num-bar"></span></div>
+            <div class="module-title">Observabilité & SRE</div>
+            <div class="module-desc">Logs, métriques, traces distribuées. Prometheus, Grafana, SLOs et error budgets.
+            </div>
+            <div class="module-footer">
+              <div class="module-tags"><span class="tag">3 séances</span><span class="tag">Prometheus</span></div>
+              <span class="module-arrow">↗</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- DIVIDER -->
+      <div class="divider" style="margin:0 32px 48px"></div>
+
+      <!-- TPS -->
+      <div class="section" style="margin-bottom:64px">
+        <div class="section-head">
+          <span class="section-title">Travaux pratiques</span>
+          <a class="section-link" href="#">12 TP au total →</a>
+        </div>
+        <div class="tp-table">
+          <div class="tp-header">
+            <span>N°</span>
+            <span>Intitulé</span>
+            <span>Module</span>
+            <span>Durée</span>
+            <span>Statut</span>
+          </div>
+          <a class="tp-row" href="#">
+            <span class="tp-num">TP·01</span>
+            <span class="tp-title">Déploiement d'une app Node.js sur VPS — IaaS bare metal</span>
+            <span class="tp-module-ref">01 · Intro Cloud</span>
+            <span class="tp-diff">4h</span>
+            <span><span class="badge badge-open">Ouvert</span></span>
+          </a>
+          <a class="tp-row" href="#">
+            <span class="tp-num">TP·02</span>
+            <span class="tp-title">Conteneurisation d'une API REST avec Docker Compose</span>
+            <span class="tp-module-ref">03 · Conteneurs</span>
+            <span class="tp-diff">3h</span>
+            <span><span class="badge badge-open">Ouvert</span></span>
+          </a>
+          <a class="tp-row" href="#">
+            <span class="tp-num">TP·03</span>
+            <span class="tp-title">Premier cluster Kubernetes avec k3s — déploiement et scaling</span>
+            <span class="tp-module-ref">03 · Orchestration</span>
+            <span class="tp-diff">5h</span>
+            <span><span class="badge badge-soon">À venir</span></span>
+          </a>
+          <a class="tp-row" href="#">
+            <span class="tp-num">TP·04</span>
+            <span class="tp-title">Infrastructure AWS avec Terraform — VPC, EC2, RDS, S3</span>
+            <span class="tp-module-ref">04 · IaC</span>
+            <span class="tp-diff">6h</span>
+            <span><span class="badge badge-soon">À venir</span></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- CONTRIBUTIONS -->
+      <div class="section">
+        <div class="section-head">
+          <span class="section-title">Contributions étudiantes</span>
+          <a class="section-link" href="#">Voir toutes →</a>
+        </div>
+        <div class="contrib-grid">
+          <div class="contrib-card">
+            <div class="contrib-top">
+              <div class="avatar">AM</div>
+              <div class="contrib-meta-top">
+                <div class="contrib-author-name">a.mansouri</div>
+                <div class="contrib-date">il y a 3 jours</div>
+              </div>
+              <span class="type-badge type-cas">ÉTUDE DE CAS</span>
+            </div>
+            <div class="contrib-title">Migration d'un monolithe Laravel vers microservices — retour d'expérience</div>
+            <div class="contrib-tags">
+              <span class="tag">Laravel</span><span class="tag">Docker</span><span class="tag">RabbitMQ</span>
+            </div>
+          </div>
+          <div class="contrib-card">
+            <div class="contrib-top">
+              <div class="avatar" style="background:linear-gradient(135deg,var(--lime),var(--electric))">KB</div>
+              <div class="contrib-meta-top">
+                <div class="contrib-author-name">k.benali</div>
+                <div class="contrib-date">il y a 5 jours</div>
+              </div>
+              <span class="type-badge type-solution">SOLUTION TP</span>
+            </div>
+            <div class="contrib-title">Solution annotée TP·02 — multi-stage builds et optimisation d'image Docker</div>
+            <div class="contrib-tags">
+              <span class="tag">Docker</span><span class="tag">TP·02</span>
+            </div>
+          </div>
+          <div class="contrib-card">
+            <div class="contrib-top">
+              <div class="avatar" style="background:linear-gradient(135deg,var(--electric),#60A5FA)">SR</div>
+              <div class="contrib-meta-top">
+                <div class="contrib-author-name">s.rachidi</div>
+                <div class="contrib-date">il y a 1 semaine</div>
+              </div>
+              <span class="type-badge type-ressource">RESSOURCE</span>
+            </div>
+            <div class="contrib-title">Cheatsheet Terraform — modules, workspaces, state remote sur S3</div>
+            <div class="contrib-tags">
+              <span class="tag">Terraform</span><span class="tag">AWS</span>
+            </div>
+          </div>
+          <div class="contrib-card">
+            <div class="contrib-top">
+              <div class="avatar" style="background:linear-gradient(135deg,var(--violet),var(--rose))">YE</div>
+              <div class="contrib-meta-top">
+                <div class="contrib-author-name">y.el-fassi</div>
+                <div class="contrib-date">il y a 2 semaines</div>
+              </div>
+              <span class="type-badge type-impl">IMPLÉMENTATION</span>
+            </div>
+            <div class="contrib-title">Dashboard Grafana pour monitoring d'un cluster k3s — template complet</div>
+            <div class="contrib-tags">
+              <span class="tag">Grafana</span><span class="tag">Prometheus</span><span class="tag">k3s</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <footer>
+        <div>
+          <div class="footer-brand">GL·Cloud</div>
+          <div class="footer-text">M2 Informatique · Open Source · Hébergé sur GitHub Pages</div>
+        </div>
+        <div class="footer-links">
+          <a class="footer-link" href="#">GitHub</a>
+          <a class="footer-link" href="#">Contribuer</a>
+          <a class="footer-link" href="#">Discussions</a>
+          <a class="footer-link" href="#">Recherche</a>
+        </div>
+      </footer>
+
+    </div>
+  </div>
 </body>
+
 </html>
