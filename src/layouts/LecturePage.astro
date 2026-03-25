@@ -27,45 +27,41 @@ const dateStr = new Intl.DateTimeFormat('fr-FR', {
 ---
 
 <Base title={title} description={description} hideNavbar={true}>
-  <nav class="flex flex-col sm:flex-row sm:items-center justify-between px-6 py-0 min-h-[60px] border-b border-[var(--glass-border)] bg-[rgba(8,11,18,0.75)] sticky top-0 z-50 backdrop-blur-xl">
+  <nav class="flex flex-col sm:flex-row sm:items-center justify-between px-6 py-0 min-h-[60px] border-b border-[var(--ghost-border)] bg-[var(--surface-container-low)] sticky top-0 z-50">
     <div class="flex items-center gap-4 py-2 sm:py-0">
-      <a href="/" class="font-syne font-extrabold text-[15px] bg-clip-text text-transparent bg-gradient-to-r from-[var(--electric)] to-[var(--violet)] no-underline">GL·Cloud</a>
+      <a href="/" class="font-serif font-medium text-[16px] text-[var(--text)] no-underline tracking-tight">GL·Cloud</a>
       <div class="flex items-center text-[11px] text-[var(--muted)]">
         <Breadcrumb context="cours" module={module} seance={seance} title={title} />
       </div>
     </div>
-    <div class="text-[10px] text-[var(--muted)] hidden sm:block">Modifié le {dateStr}</div>
+    <div class="text-[10px] uppercase font-mono tracking-[0.06em] text-[var(--muted)] hidden sm:block">Modifié le {dateStr}</div>
   </nav>
 
-  <div class="grid grid-cols-1 lg:grid-cols-[240px_1fr_220px] min-h-[calc(100vh-60px)] relative z-10 w-full max-w-[1264px] mx-auto">
-    <aside class="hidden lg:block border-r border-[var(--glass-border)] py-6 sticky top-[60px] h-[calc(100vh-60px)] overflow-y-auto">
+  <div class="grid grid-cols-1 lg:grid-cols-[260px_1fr_240px] min-h-[calc(100vh-60px)] relative z-10 w-full max-w-[1400px] mx-auto">
+    <aside class="hidden lg:block border-r border-[var(--ghost-border)] py-8 sticky top-[60px] h-[calc(100vh-60px)] overflow-y-auto">
       <SidebarLeft activeModule={module} activeSeance={seance} />
     </aside>
 
-    <main class="w-full px-6 lg:px-13 py-10 max-w-[720px] mx-auto">
-      <div class="inline-flex items-center gap-2 text-[9px] tracking-[0.14em] text-[var(--electric)] px-3 py-1.5 rounded-md bg-[rgba(110,231,247,0.08)] border border-[rgba(110,231,247,0.2)] mb-5">
-        MODULE {module.toString().padStart(2, '0')} · SÉANCE {seance} · <span class="uppercase">{niveau}</span>
+    <main class="w-full px-8 lg:px-16 py-12 max-w-[800px] mx-auto">
+      <div class="inline-flex items-center gap-2 text-[10px] font-mono tracking-[0.1em] font-medium text-[var(--text)] px-3 py-1.5 border border-[var(--ghost-border)] bg-[var(--surface-container-low)] mb-6">
+        MODULE {module.toString().padStart(2, '0')} · SÉANCE {seance} · <span class="uppercase text-[var(--primary)]">{niveau}</span>
       </div>
-      <h1 class="font-syne font-extrabold text-[38px] leading-[1.05] tracking-[-0.03em] mb-2 text-[var(--text)]">
-        <span class="bg-gradient-to-r from-[var(--text)] from-40% to-[var(--electric)] bg-clip-text text-transparent">{title}</span>
+      <h1 class="font-serif font-medium text-[46px] leading-[1.1] tracking-[-0.02em] mb-4 text-[var(--text)]">
+        {title}
       </h1>
       
-      <div class="flex flex-wrap gap-0 mb-9 mt-5 bg-[var(--glass)] border border-[var(--glass-border)] rounded-xl overflow-hidden shadow-sm">
-        <div class="flex-1 min-w-[100px] p-3 px-4 border-r border-[var(--glass-border)] last:border-r-0">
-          <div class="text-[9px] tracking-[0.1em] text-[var(--muted)] mb-1">AUTEUR</div>
-          <div class="text-[13px] text-[var(--text)] font-medium">Prof. Alami</div>
+      <div class="flex flex-wrap gap-0 mb-12 mt-8 bg-[var(--surface-container-low)] border border-[var(--ghost-border)]">
+        <div class="flex-1 min-w-[120px] p-4 px-5 border-r border-[var(--ghost-border)] last:border-r-0">
+          <div class="text-[10px] font-mono tracking-[0.1em] text-[var(--muted)] mb-2 uppercase">Auteur</div>
+          <div class="text-[14px] font-mono text-[var(--text)] font-medium">Prof. Alami</div>
         </div>
-        <div class="flex-1 min-w-[100px] p-3 px-4 border-r border-[var(--glass-border)] last:border-r-0">
-          <div class="text-[9px] tracking-[0.1em] text-[var(--muted)] mb-1">DURÉE</div>
-          <div class="text-[13px] text-[var(--text)] font-medium">{duree}</div>
+        <div class="flex-1 min-w-[100px] p-4 px-5 border-r border-[var(--ghost-border)] last:border-r-0">
+          <div class="text-[10px] font-mono tracking-[0.1em] text-[var(--muted)] mb-2 uppercase">Durée</div>
+          <div class="text-[14px] font-mono text-[var(--text)] font-medium">{duree}</div>
         </div>
-        <div class="flex-1 min-w-[100px] p-3 px-4 border-r border-[var(--glass-border)] last:border-r-0">
-          <div class="text-[9px] tracking-[0.1em] text-[var(--muted)] mb-1">NIVEAU</div>
-          <div class="text-[13px] text-[var(--text)] font-medium capitalize">{niveau}</div>
-        </div>
-        <div class="flex-1 min-w-[100px] p-3 px-4 border-r border-[var(--glass-border)] last:border-r-0 hidden sm:block">
-          <div class="text-[9px] tracking-[0.1em] text-[var(--muted)] mb-1">DATE</div>
-          <div class="text-[13px] text-[var(--text)] font-medium">{dateStr}</div>
+        <div class="flex-1 min-w-[100px] p-4 px-5 border-r border-[var(--ghost-border)] last:border-r-0 hidden sm:block">
+          <div class="text-[10px] font-mono tracking-[0.1em] text-[var(--muted)] mb-2 uppercase">Date</div>
+          <div class="text-[14px] font-mono text-[var(--text)] font-medium">{dateStr}</div>
         </div>
       </div>
 
@@ -76,15 +72,15 @@ const dateStr = new Intl.DateTimeFormat('fr-FR', {
       <GiscusComments />
     </main>
 
-    <aside class="hidden lg:block border-l border-[var(--glass-border)] py-6 px-5 sticky top-[60px] h-[calc(100vh-60px)] overflow-y-auto">
+    <aside class="hidden lg:block border-l border-[var(--ghost-border)] py-8 px-6 sticky top-[60px] h-[calc(100vh-60px)] overflow-y-auto">
       <OutlineRight headings={headings} />
 
       {tpAssocie && (
-        <div class="mt-5 pt-5 border-t border-[var(--glass-border)]">
-          <div class="bg-[rgba(110,231,247,0.04)] border border-[rgba(110,231,247,0.15)] rounded-xl p-4 mt-1">
-            <div class="text-[9px] tracking-[0.12em] text-[var(--electric)] mb-2">TP ASSOCIÉ</div>
-            <div class="text-[12px] text-[var(--text)] leading-[1.4] mb-3 font-medium">{tpAssocie.label}</div>
-            <a href={tpAssocie.url} class="text-[10px] text-[var(--electric)] no-underline flex items-center gap-1 transition-all duration-150 hover:gap-2">Accéder au TP →</a>
+        <div class="mt-8 pt-8 border-t border-[var(--ghost-border)]">
+          <div class="bg-[var(--surface-container-low)] border border-[var(--primary-container)] p-5">
+            <div class="text-[10px] font-mono tracking-[0.1em] text-[var(--primary-container)] mb-3 font-medium uppercase">TP Associé</div>
+            <div class="text-[14px] font-serif text-[var(--text)] leading-[1.4] mb-4 font-medium">{tpAssocie.label}</div>
+            <a href={tpAssocie.url} class="text-[11px] font-mono text-[var(--text)] no-underline flex items-center gap-2 hover:text-[var(--primary)] border border-[var(--ghost-border)] inline-block px-3 py-1.5 hover:bg-[var(--surface-container-high)]">Accéder au TP →</a>
           </div>
         </div>
       )}

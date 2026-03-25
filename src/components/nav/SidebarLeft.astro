@@ -24,18 +24,14 @@ sortedModules.forEach(mod => {
 });
 ---
 
-<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-8">
   {sortedModules.map((mod) => {
-    // Check if the current module contains the active seance
     const isModuleActive = activeModule === mod;
     
     return (
       <div class="mb-0">
-        <div class="flex items-center gap-2 px-5 py-1.5 mb-1">
-          <span class={`text-[9px] tracking-[0.12em] font-medium px-2 py-0.5 rounded border ${isModuleActive ? 'text-[var(--electric)] bg-[rgba(110,231,247,0.1)] border-[rgba(110,231,247,0.2)]' : 'text-[var(--muted)] bg-[var(--glass)] border-[var(--glass-border)]'}`}>
-            {mod.toString().padStart(2, '0')}
-          </span>
-          <span class="text-[10px] text-[var(--muted)] tracking-[0.06em] uppercase truncate">
+        <div class="flex items-center gap-2 px-5 py-2 mb-2 bg-[var(--surface-container-low)]">
+          <span class="text-[10px] text-[var(--text)] tracking-[0.1em] font-medium uppercase">
             MODULE {mod.toString().padStart(2, '0')}
           </span>
         </div>
@@ -46,23 +42,20 @@ sortedModules.forEach(mod => {
             return (
               <a 
                 href={`/cours/module-${mod.toString().padStart(2, '0')}/seance-${seance.data.seance}`}
-                class={`flex items-center gap-2.5 px-5 py-2 cursor-pointer no-underline transition-colors duration-150 relative group hover:bg-[var(--glass)] ${isActive ? 'bg-[rgba(110,231,247,0.06)] before:content-[\'\'] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-0.5 before:bg-gradient-to-b before:from-[var(--electric)] before:to-[var(--violet)] before:rounded-r-sm' : ''}`}
+                class={`flex items-center px-5 py-2 cursor-pointer no-underline relative group hover:bg-[var(--surface-container-low)] ${isActive ? 'bg-[var(--surface-container-high)] border-l-[3px] border-[var(--primary)] pl-[17px]' : 'border-l pl-[20px] border-[var(--ghost-border)]'}`}
               >
-                <span class={`w-1.5 h-1.5 rounded-full shrink-0 border transition-colors duration-150 ${isActive ? 'bg-[var(--electric)] border-[var(--electric)]' : 'border-[var(--muted)] group-hover:border-[var(--text)]'}`}></span>
                 <div>
-                  <div class={`text-[11px] leading-[1.4] transition-colors duration-150 ${isActive ? 'text-[var(--text)]' : 'text-[var(--muted)] group-hover:text-[var(--text)]'}`}>
+                  <div class={`text-[12px] leading-[1.5] ${isActive ? 'text-[var(--text)] font-medium' : 'text-[var(--muted)] group-hover:text-[var(--text)]'}`}>
                     {seance.data.titre}
                   </div>
-                  <div class="text-[9px] text-[var(--hint)] tracking-[0.06em] mt-[1px]">
-                    SÉANCE {seance.data.seance}
+                  <div class="text-[10px] text-[var(--hint)] tracking-[0.06em] mt-1 uppercase">
+                    Séance {seance.data.seance}
                   </div>
                 </div>
               </a>
             );
           })}
         </div>
-        
-        <div class="h-px bg-[var(--glass-border)] mx-4 mt-4"></div>
       </div>
     );
   })}

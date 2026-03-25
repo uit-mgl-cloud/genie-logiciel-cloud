@@ -4,10 +4,10 @@ interface Props {
 }
 const { headings } = Astro.props;
 ---
-<span class="text-[9px] tracking-[0.14em] text-[var(--muted)] mb-4 block">SUR CETTE PAGE</span>
+<span class="text-[10px] tracking-[0.1em] text-[var(--muted)] mb-5 block uppercase font-medium">Sur cette page</span>
 <div class="flex flex-col">
   {headings.map((h: any) => (
-    <a href={`#${h.slug}`} class={`block text-[11px] text-[var(--muted)] py-1.5 border-l border-transparent transition-all duration-150 no-underline outline-item hover:text-[var(--text)] hover:border-[var(--glass-border)] ${h.depth > 2 ? 'pl-[22px] text-[10px]' : 'pl-3'}`}>
+    <a href={`#${h.slug}`} class={`block text-[11px] text-[var(--muted)] py-2 border-l border-[var(--ghost-border)] no-underline outline-item hover:text-[var(--text)] hover:bg-[var(--surface-container-low)] ${h.depth > 2 ? 'pl-6' : 'pl-3'}`}>
       {h.text}
     </a>
   ))}
@@ -38,7 +38,8 @@ const { headings } = Astro.props;
 
 <style>
   .outline-item.active {
-    color: var(--electric);
-    border-left-color: var(--electric);
+    color: var(--text);
+    border-left-color: var(--primary);
+    background-color: var(--surface-container-low);
   }
 </style>

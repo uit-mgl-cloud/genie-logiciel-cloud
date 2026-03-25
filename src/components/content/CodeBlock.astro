@@ -1,22 +1,16 @@
 ---
 // A wrapper component to style code blocks in MDX
-// Real implementation might intercept Astro's Code component or be used as an MDX component wrapper
 interface Props {
   lang: string;
 }
 const { lang } = Astro.props;
 ---
-<div class="bg-[rgba(0,0,0,0.4)] border border-[var(--glass-border)] rounded-[14px] my-6 overflow-hidden relative group">
-  <div class="flex items-center justify-between px-[18px] py-[11px] border-b border-[var(--glass-border)] bg-[rgba(255,255,255,0.02)]">
-    <span class="text-[9px] tracking-[0.1em] font-medium px-2.5 py-0.5 rounded-md bg-[rgba(110,231,247,0.1)] border border-[rgba(110,231,247,0.2)] text-[var(--electric)] uppercase">{lang}</span>
-    <div class="flex gap-1.5 items-center">
-      <button class="text-[9px] text-[var(--muted)] cursor-pointer tracking-[0.06em] bg-transparent border-none uppercase hover:text-[var(--text)] transition-colors copy-btn mr-2">copier</button>
-      <div class="w-2.5 h-2.5 rounded-full bg-[#FF5F57]"></div>
-      <div class="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]"></div>
-      <div class="w-2.5 h-2.5 rounded-full bg-[#28C840]"></div>
-    </div>
+<div class="bg-[var(--surface-container-low)] border border-[var(--ghost-border)] my-8 overflow-hidden relative group">
+  <div class="flex items-center justify-between px-4 py-2 border-b border-[var(--ghost-border)] bg-[var(--surface)]">
+    <span class="text-[10px] tracking-[0.1em] font-medium font-mono px-2 py-1 bg-[var(--surface-container-high)] text-[var(--muted)] uppercase">{lang}</span>
+    <button class="text-[10px] text-[var(--muted)] font-mono cursor-pointer tracking-[0.06em] bg-transparent border-none uppercase hover:text-[var(--text)] transition-none copy-btn">copier</button>
   </div>
-  <div class="code-content text-[12px] leading-[1.8] font-mono text-[var(--text)] whitespace-pre overflow-x-auto p-5">
+  <div class="code-content text-[13px] leading-[1.8] font-mono text-[var(--text)] whitespace-pre overflow-x-auto p-6">
     <slot />
   </div>
 </div>

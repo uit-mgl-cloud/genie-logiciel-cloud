@@ -2,22 +2,23 @@
 
 ---
 
-<div class="mt-16 pt-10 border-t border-[var(--glass-border)]">
+<div class="mt-16 pt-10 border-t border-[var(--ghost-border)]">
   <div
-    class="text-[10px] tracking-[0.14em] text-[var(--muted)] mb-6 flex items-center gap-2 before:content-[''] before:inline-block before:w-4 before:h-[1px] before:bg-[var(--glass-border)] uppercase font-semibold"
+    class="text-[10px] tracking-[0.14em] text-[var(--muted)] mb-6 flex items-center gap-2 font-mono uppercase font-medium"
   >
-    DISCUSSIONS · QUESTIONS
+    <span class="w-4 h-[1px] bg-[var(--ghost-border)]"></span>
+    Discussions · Questions
   </div>
   <div class="giscus">
     <div
-      class="bg-[var(--glass)] border border-[var(--glass-border)] rounded-2xl text-center p-10 flex flex-col items-center justify-center min-h-[160px]"
+      class="bg-[var(--surface-container-low)] border border-[var(--ghost-border)] text-center p-10 flex flex-col items-center justify-center min-h-[160px]"
     >
-      <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--electric)] to-[var(--violet)] mb-4 flex items-center justify-center shadow-[0_0_15px_rgba(167,139,250,0.3)]">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 text-[#080B12]">
+      <div class="w-10 h-10 border border-[var(--ghost-border)] bg-[var(--surface-container-high)] mb-4 flex items-center justify-center">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 text-[var(--muted)]">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
         </svg>
       </div>
-      <p class="text-[13px] text-[var(--muted)] leading-relaxed max-w-[320px]">
+      <p class="text-[13px] text-[var(--muted)] leading-relaxed max-w-[320px] font-mono">
         <span class="text-[var(--text)] font-semibold mb-1 block">Commentaires via Giscus</span>
         Connectez-vous avec votre compte GitHub pour participer à la discussion.
       </p>
@@ -36,7 +37,7 @@
   data-reactions-enabled="1"
   data-emit-metadata="0"
   data-input-position="top"
-  data-theme="transparent_dark"
+  data-theme="dark"
   data-lang="fr"
   crossorigin="anonymous"
   async
